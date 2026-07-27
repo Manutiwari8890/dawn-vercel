@@ -13,16 +13,16 @@ export const CartProvider = ({ children }) => {
 
 const [cartItems, setCartItems] = useState([]);
 
-useEffect(() => {
-  try {
-    const saved = localStorage.getItem("cartItems");
-    if (saved) {
-      setCartItems(JSON.parse(saved));
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("cartItems");
+      if (saved) {
+        setCartItems(JSON.parse(saved));
+      }
+    } catch (err) {
+      console.error("Error parsing cart items from localStorage", err);
     }
-  } catch (err) {
-    console.error("Error parsing cart items from localStorage", err);
-  }
-}, []);
+  }, []);
   if (typeof window !== "undefined") {
     const getGuestKey = () => localStorage.getItem("guest_key_token");
   }
