@@ -7,6 +7,8 @@ import { CartProvider } from "@/context/cart";
 
 
 export default function Providers({ children }) {
+      console.log("Providers rendered");
+
     return (
         <WishListProvider>
             <CartProvider>

@@ -8,13 +8,13 @@ export const WishListContext = createContext();
 
 export const WishListProvider = ({ children }) => {
     const [wishlistLoadingIds, setWishlistLoadingIds] = useState([]);
-
+    const [token, setToken] = useState(null)
     const router = useRouter();
 
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-    if (typeof window !== "undefined") {
-        const token = localStorage.getItem("token");
-    }
+    useEffect(() => {
+        setToken(localStorage.getItem("token"));
+    })
 
     const [refreshWishList, setRefreshWishList] = useState(false);
 

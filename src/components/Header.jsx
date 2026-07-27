@@ -1,6 +1,7 @@
 "use client";
 import {useEffect, useState, useRef, useContext} from 'react';
-import { useRouter, usePathname } from "next/navigation";import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
+import Link from "next/link";
 import { CartContext } from '../context/cart'
 import { AuthContext } from '../context/AuthContext';
 import { useLoader } from "../context/LoaderContext";
@@ -113,6 +114,8 @@ function Header({ onToggleCart, isOverlay, isCart }){
     useEffect(() => {
     const header = document.querySelector('.main-head');
     const scrollTop = document.querySelector('#scroll-top');
+    const isHome = pathname === "/";
+    document.body.classList.toggle("inner-page", !isHome);
 
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
