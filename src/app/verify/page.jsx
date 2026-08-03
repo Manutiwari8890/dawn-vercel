@@ -1,6 +1,5 @@
 "use client"
 import { useEffect, useState } from 'react';
-import { useEffect } from 'react';
 import { useLoader } from '@/context/LoaderContext';
 
 export default function Page()
