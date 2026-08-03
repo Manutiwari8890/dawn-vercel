@@ -27,19 +27,18 @@ export default function page()
     const [con_new_password, setConNewPass] = useState("");
 
 
-    const requestOptions = {
-        method: "PUT",
-        headers: {  "Authorization" : `Bearer ${localStorage.getItem("token")}`,  "Content-Type": "application/json"},
-        body : JSON.stringify({
-            name : fname,
-            last_name : lname,
-            company : company,
-            email : email
-        })
-    };
     const handleUpdate = (e) => {
         e.preventDefault();
-        fetch(`${baseUrl}user`, requestOptions)
+        fetch(`${baseUrl}user`, {
+            method: "PUT",
+            headers: { "Authorization": `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json" },
+            body: JSON.stringify({
+                name: fname,
+                last_name: lname,
+                company: company,
+                email: email
+            })
+        })
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
