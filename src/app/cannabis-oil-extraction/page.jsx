@@ -26,7 +26,7 @@ export const metadata = {
 
     images: [
       {
-        url: "http://dawnscientific.com/assets/images/Dawn-scientific.png",
+        url: "http://dawnscientific.com/assets/images/Dawn-scientific.webp",
         width: 1200,
         height: 630,
         alt: "Dawn Scientific",
@@ -40,7 +40,7 @@ export const metadata = {
     description:
       "Cannabis Oil Extraction: The cannabis plant is renowned for its vast array of over 113 isolated cannabinoids, apart from THC. ",
     images: [
-      "http://dawnscientific.com/assets/images/Dawn-scientific.png",
+      "http://dawnscientific.com/assets/images/Dawn-scientific.webp",
     ],
   },
 };

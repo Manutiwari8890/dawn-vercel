@@ -27,7 +27,7 @@ export const metadata = {
 
     images: [
       {
-        url: "https://dawnscientific.com/assets/images/Dawn-scientific.png",
+        url: "https://dawnscientific.com/assets/images/Dawn-scientific.webp",
         width: 1200,
         height: 630,
         alt: "Dawn Scientific",
@@ -41,7 +41,7 @@ export const metadata = {
     description:
       "Discover Dawn Scientific's commitment to quality laboratory chemicals, reagents, solvents, and scientific products for research, testing, and analysis.",
     images: [
-      "https://dawnscientific.com/assets/images/Dawn-scientific.png",
+      "https://dawnscientific.com/assets/images/Dawn-scientific.webp",
     ],
   },
 };

@@ -25,7 +25,7 @@ export const metadata = {
 
         images: [
             {
-                url: "http://dawnscientific.com/assets/images/Dawn-scientific.png",
+                url: "http://dawnscientific.com/assets/images/Dawn-scientific.webp",
                 width: 1200,
                 height: 630,
                 alt: "Dawn Scientific",
@@ -39,7 +39,7 @@ export const metadata = {
         description:
             "Dawn Scientific, Inc is committed to making every purchase a pleasant one. However, if you are not completely satisfied with your purchase, we’re here to help. Simply Log In to your registered Dawn Scientific, Inc account from there you will be able to complete return request.",
         images: [
-            "http://dawnscientific.com/assets/images/Dawn-scientific.png",
+            "http://dawnscientific.com/assets/images/Dawn-scientific.webp",
         ],
     },
 };

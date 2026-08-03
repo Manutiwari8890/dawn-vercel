@@ -27,7 +27,7 @@ export const metadata = {
 
         images: [
             {
-                url: "http://dawnscientific.com/assets/images/Dawn-scientific.png",
+                url: "http://dawnscientific.com/assets/images/Dawn-scientific.webp",
                 width: 1200,
                 height: 630,
                 alt: "Dawn Scientific",
@@ -41,7 +41,7 @@ export const metadata = {
         description:
             "Microbiology Laboratory where scientist / microbiologist devoted to the identification of microorganisms including bacteria, yeasts, fungus and viruses in temperature and humidity controlled environment.",
         images: [
-            "http://dawnscientific.com/assets/images/Dawn-scientific.png",
+            "http://dawnscientific.com/assets/images/Dawn-scientific.webp",
         ],
     },
 };

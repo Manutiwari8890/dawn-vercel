@@ -26,7 +26,7 @@ export const metadata = {
 
         images: [
             {
-                url: "http://dawnscientific.com/assets/images/Dawn-scientific.png",
+                url: "http://dawnscientific.com/assets/images/Dawn-scientific.webp",
                 width: 1200,
                 height: 630,
                 alt: "Dawn Scientific",
@@ -40,7 +40,7 @@ export const metadata = {
         description:
             "Your privacy is important to you and therefore, it is important to Dawn Scientific, Inc. This Commercial Data Privacy Statement, referred to throughout as the Privacy Statement, provides three important pieces of information: How Dawn Scientific, Inc collects personal data from you. ",
         images: [
-            "http://dawnscientific.com/assets/images/Dawn-scientific.png",
+            "http://dawnscientific.com/assets/images/Dawn-scientific.webp",
         ],
     },
 };

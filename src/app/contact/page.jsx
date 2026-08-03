@@ -27,7 +27,7 @@ export const metadata = {
 
         images: [
             {
-                url: "http://dawnscientific.com/assets/images/Dawn-scientific.png",
+                url: "http://dawnscientific.com/assets/images/Dawn-scientific.webp",
                 width: 1200,
                 height: 630,
                 alt: "Dawn Scientific",
@@ -41,7 +41,7 @@ export const metadata = {
         description:
             "Contact us for any of your Laboratory requirements on sales@dawnscientific.com, call us on 1-800-DAWN-SCI or 732-902-6300",
         images: [
-            "http://dawnscientific.com/assets/images/Dawn-scientific.png",
+            "http://dawnscientific.com/assets/images/Dawn-scientific.webp",
         ],
     },
 };

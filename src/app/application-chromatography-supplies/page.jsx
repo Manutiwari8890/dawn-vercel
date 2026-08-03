@@ -28,7 +28,7 @@ export const metadata = {
 
         images: [
             {
-                url: "http://dawnscientific.com/assets/images/Dawn-scientific.png",
+                url: "http://dawnscientific.com/assets/images/Dawn-scientific.webp",
                 width: 1200,
                 height: 630,
                 alt: "Dawn Scientific",
@@ -42,7 +42,7 @@ export const metadata = {
         description:
             "Chromatography is an important technique for laboratory science. It can separate, identify, and quantify compounds in complex mixtures.",
         images: [
-            "http://dawnscientific.com/assets/images/Dawn-scientific.png",
+            "http://dawnscientific.com/assets/images/Dawn-scientific.webp",
         ],
     },
 };

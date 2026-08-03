@@ -27,7 +27,7 @@ export const metadata = {
 
     images: [
       {
-        url: "http://dawnscientific.com/assets/images/Dawn-scientific.png",
+        url: "http://dawnscientific.com/assets/images/Dawn-scientific.webp",
         width: 1200,
         height: 630,
         alt: "Dawn Scientific",
@@ -41,7 +41,7 @@ export const metadata = {
     description:
       "Office AssistantDawn Scientific, Inc is a small but fast growing company that needs a reliable, organized Office Assistant to manage the day-to-day administrative aspects of running the business. The successful applicant will have a positive attitude, a desire to work as efficiently as possible, and excellent client-facing communication skills. If you have worked in a fast-paced office in the past and you enjoy establishing your own organizational systems, we’re excited to talk with you. This job may include some overtime as well as occasional weekend work. We’re looking for someone who can operate effectively with little or no supervision and who can manage multiple tasks at once without becoming overwhelmed.",
     images: [
-      "http://dawnscientific.com/assets/images/Dawn-scientific.png",
+      "http://dawnscientific.com/assets/images/Dawn-scientific.webp",
     ],
   },
 };

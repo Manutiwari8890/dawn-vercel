@@ -26,7 +26,7 @@ export async function generateMetadata() {
       siteName: "Lab Consumables, Chemicals & Equipment from Dawn Scientific",
       images: [
         {
-            url: "http://dawnscientific.com/assets/images/Dawn-scientific.png",
+            url: "http://dawnscientific.com/assets/images/Dawn-scientific.webp",
             width: 1200,
             height: 630,
             alt: "Dawn Scientific",
@@ -38,7 +38,7 @@ export async function generateMetadata() {
       card: "summary_large_image",
       title,
       description,
-      images: ["http://dawnscientific.com/assets/images/Dawn-scientific.png"]
+      images: ["http://dawnscientific.com/assets/images/Dawn-scientific.webp"]
     },
   };
 }

@@ -1,9 +1,9 @@
-import CategoryClient from './CategoryClient';
+import BrandClient from './BrandClient';
+
 
 async function getProduct(slug) {
-console.log(slug[slug?.length-1])
     const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-    const res = await fetch(`${BASE_URL}categories/${slug[slug?.length-1]}`, {
+  const res = await fetch(`${BASE_URL}brands/${slug}`, {
                     method: 'GET',
                     headers: {
                         "Content-Type": "application/json",
@@ -58,5 +58,6 @@ export async function generateMetadata({ params }) {
   };
 }
 export default async function Page(){
-    return <CategoryClient />
+
+    return <BrandClient/>
 }

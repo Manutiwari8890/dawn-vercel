@@ -27,7 +27,7 @@ export const metadata = {
 
         images: [
             {
-                url: "http://dawnscientific.com/assets/images/Dawn-scientific.png",
+                url: "http://dawnscientific.com/assets/images/Dawn-scientific.webp",
                 width: 1200,
                 height: 630,
                 alt: "Dawn Scientific",
@@ -41,7 +41,7 @@ export const metadata = {
         description:
             "Pharmaceutical research involves the creation of new chemical compounds for use as pharmaceutical, which occurs in pharmacy schools and pharmaceutical manufacturing labs.",
         images: [
-            "http://dawnscientific.com/assets/images/Dawn-scientific.png",
+            "http://dawnscientific.com/assets/images/Dawn-scientific.webp",
         ],
     },
 };
