@@ -8,10 +8,6 @@ import { CartContext } from './cart';
 export const AuthContext = createContext();
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-if (typeof window !== "undefined") {
-  const token = localStorage.getItem("token");
-}
-
 
 export const AuthProvider = ({ children }) => {
   const { fetchCartFromApi } = useContext(CartContext)

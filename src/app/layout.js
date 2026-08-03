@@ -1,11 +1,43 @@
+"use client";
 import "./globals.css";
 import Script from "next/script";
 import Providers from "./providers";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useState, useEffect } from "react";
+import Sidebar from "@/components/Sidebar";
 
 
 export default function RootLayout({ children }) {
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isOverlay, setIsOverlay] = useState(false);
+
+  const toggleCart = () => {
+    document.documentElement.style.overflow = "hidden";
+    setIsCartOpen(prev => !prev);
+    setIsOverlay(prev => !prev);
+  };
+  const closeCart = () => {
+    document.documentElement.style.overflow = "auto";
+    setIsCartOpen(false);
+    setIsOverlay(false);
+  };
+
+  
+  useEffect(() => {
+    const disableActions = (e) => {
+      e.preventDefault();
+    };
+
+    document.addEventListener("copy", disableActions);
+    document.addEventListener("cut", disableActions);
+
+    return () => {
+      document.removeEventListener("copy", disableActions);
+      document.removeEventListener("cut", disableActions);
+    };
+  }, []);
+
   return (
     <html
       lang="en"
@@ -13,7 +45,6 @@ export default function RootLayout({ children }) {
       <head>
         <meta charSet="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <title>Lab Consumables, Chemicals & Equipment from Dawn Scientific</title>
             <link rel="shortcut icon" href="/assets/images/cropped-w-logo-blue-32x32.webp" type="image/x-icon" sizes="32x32" />
               <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossOrigin="anonymous" />
                 <link rel="preconnect" href="https://salesiq.zohopublic.com"  crossOrigin="anonymous" />
@@ -42,7 +73,8 @@ export default function RootLayout({ children }) {
                     </head>
                     <body>
                       <Providers>
-                        <Header />
+                        <Header onToggleCart={toggleCart} isOverlay={isOverlay} isCart={isCartOpen} />
+                        <Sidebar isActive={isCartOpen} onClose={closeCart} />
                         {children}
                         <Footer />
                       </Providers>

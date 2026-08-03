@@ -10,7 +10,7 @@ export const CartProvider = ({ children }) => {
 
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [recProData, setRecPro] = useState([]);
-
+  
 const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
@@ -58,12 +58,12 @@ const [cartItems, setCartItems] = useState([]);
     try {
       const response = await fetch(`${baseUrl}cart`, {
         method: "POST",
-        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json" },
         body: JSON.stringify({
           product_id: data?.id,
           variation_id: data?.variation_id || null,
           quantity: newQty,
-          guest_token: getGuestKey()
+          guest_token: localStorage.getItem("guest_key_token")
         })
       })
       if (!response.ok) {
@@ -139,7 +139,7 @@ const [cartItems, setCartItems] = useState([]);
 
   const fetchCartFromApi = async () => {
     try {
-      const response = await fetch(`${baseUrl}cart?guest_token=${getGuestKey()}`, {
+      const response = await fetch(`${baseUrl}cart?guest_token=${localStorage.getItem("guest_key_token")}`, {
         method: "GET",
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json" },
       })
@@ -165,11 +165,11 @@ const [cartItems, setCartItems] = useState([]);
       const response = await fetch(`${baseUrl}cart/detail`, {
         method: 'POST',
         headers: {
-          "Authorization": `Bearer ${token}`,
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          guest_token: getGuestKey(),
+          guest_token: localStorage.getItem("guest_key_token"),
           coupon_code: coupon
         }),
       });
@@ -185,7 +185,7 @@ const [cartItems, setCartItems] = useState([]);
 
   const getCartTotal = () => 
     (Array.isArray(cartItems) ? cartItems : [])
-      .reduce((total, item) => total + ((token ? item.discounted_price : item.price) || 0) * (item.quantity || 0), 0)
+      .reduce((total, item) => total + ((localStorage.getItem("token") ? item.discounted_price : item.price) || 0) * (item.quantity || 0), 0)
       .toFixed(2);
   
 

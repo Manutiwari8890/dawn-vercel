@@ -10,14 +10,11 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-export default function login() {
+export default function Page() {
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const router = useRouter();
     
     const { user, logout, isLoggedIn, login } = useContext(AuthContext);
-    if (typeof window !== "undefined") {
-        const guest_token = localStorage.getItem("guest_key_token");  
-    }
     const [passTogle, setPassToggle] = useState(false);
     const [captchaInput, setCaptchaInput] = useState("");
     const [captcha, setCaptcha] = useState("");
@@ -61,7 +58,7 @@ export default function login() {
         let regobj = {
             email,
             password,
-            guest_token: guest_token,
+            guest_token: localStorage.getItem("guest_key_token"),
             "cf-turnstile-response": null,
         };
 

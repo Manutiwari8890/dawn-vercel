@@ -144,7 +144,7 @@ function Header({ onToggleCart, isOverlay, isCart }){
         window.removeEventListener('scroll', handleScroll);
         scrollTop?.removeEventListener('click', handleScrollTopClick);
         };
-    }, []);
+    }, [pathname]);
 
     function handleSearch(e) {
         e.preventDefault();
