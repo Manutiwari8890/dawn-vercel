@@ -80,19 +80,18 @@ export default function page()
     }, []);    
 
 
-    const passOptions = {
-        method: "PUT",
-        headers: {  "Authorization" : `Bearer ${localStorage.getItem("token")}`,  "Content-Type": "application/json"},
-        body : JSON.stringify({
-            current_password : current_password,
-            new_password : new_password,
-            new_password_confirmation : con_new_password,
-        })
-    };
     const handlePassword = (e) => {
         e.preventDefault();
         setIsLoading(true);
-        fetch(`${baseUrl}user/change-password`, passOptions)
+        fetch(`${baseUrl}user/change-password`, {
+            method: "PUT",
+            headers: { "Authorization": `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json" },
+            body: JSON.stringify({
+                current_password: current_password,
+                new_password: new_password,
+                new_password_confirmation: con_new_password,
+            })
+        })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
