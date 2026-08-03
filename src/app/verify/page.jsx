@@ -1,12 +1,12 @@
 "use client"
 import { useEffect, useState } from 'react';
 import { useLoader } from '@/context/LoaderContext';
+import { useSearchParams } from "next/navigation";
 
 export default function Page()
 {
     const { startLoading, stopLoading } = useLoader();
-    
-    const searchParams = new URLSearchParams(location.search);
+    const searchParams = useSearchParams();
     const uid = searchParams.get('uid');
     const hash = searchParams.get('hash');
 
