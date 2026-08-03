@@ -949,7 +949,7 @@ export default function Page() {
           style={{
             border: "1px solid #e5e7eb",
             borderRadius: "20px",
-             padding: `${window.innerWidth <= 768 ? 8 : 30}px`,
+             padding: `20px`,
             minHeight: "200px",
           }}
         >
