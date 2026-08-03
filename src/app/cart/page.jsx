@@ -15,7 +15,6 @@ export default function Page() {
     const [isLoading, setIsLoading] = useState(false);
     const token = user?.access_token;
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-    const guest_token = localStorage.getItem("guest_key_token");
     const [cartData, setCartData] = useState({});
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -85,7 +84,7 @@ export default function Page() {
         let regobj = {
             email: username,
             password,
-            guest_token: guest_token,
+            guest_token: localStorage.getItem("guest_key_token"),
         };
 
         const errors = validate(regobj);
