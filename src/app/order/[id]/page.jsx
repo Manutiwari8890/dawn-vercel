@@ -1,7 +1,8 @@
 "use client"
 
 import {useEffect, useState, useContext} from 'react';
-import { Link, NavLink, useParams } from "react-router-dom";
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { AuthContext } from '@/context/AuthContext';
 import { useLoader } from '@/context/LoaderContext';
 import AccountSidebar from '@/components/AccountSidebar';
@@ -105,8 +106,8 @@ export default function Page()
                                     <tbody>
                                         {orderDetails && orderDetails?.items?.map((item) => (
                                             <tr key={item.id}>
-                                                <td><NavLink to=""><img src={item?.product.image_url} alt=""  loading="lazy" /></NavLink></td>
-                                                <td><NavLink to={`/product/${item.product.slug}`}>{item.product.name}</NavLink></td>
+                                                <td><Link href=""><img src={item?.product.image_url} alt=""  loading="lazy" /></Link></td>
+                                                <td><Link href={`/product/${item.product.slug}`}>{item.product.name}</Link></td>
                                                 <td>${item.discounted_price}</td>
                                                 <td><span className="quan">x {item.quantity}</span></td>
                                                 <td><b>${item.total_price}</b></td>
@@ -308,7 +309,7 @@ export default function Page()
                                                 {(orderDetails?.status == "draft" && userDetail?.company?.id) ?
                                                     <tr>
                                                         <td colSpan="2">
-                                                            <Link to={`/checkout?order_id=${btoa(orderDetails?.id)}`} className="btn btn-primary w-100">Checkout</Link>
+                                                            <Link href={`/checkout?order_id=${btoa(orderDetails?.id)}`} className="btn btn-primary w-100">Checkout</Link>
                                                         </td>
                                                     </tr> : null
                                                 }
