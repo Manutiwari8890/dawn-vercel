@@ -59,11 +59,10 @@ export default function page()
         const fetchUser = async () => {
             startLoading();
             try {
-                const getOptions = {
+                const response = await fetch(`${baseUrl}user`, {
                     method: "GET",
                     headers: { "Authorization": `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json" },
-                };
-                const response = await fetch(`${baseUrl}user`, getOptions);
+                });
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
