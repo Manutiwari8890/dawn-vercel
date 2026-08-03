@@ -1,4 +1,6 @@
+import FallbackLoader from "@/components/FallbackLoader";
 import SearchClient from "./SearchClient";
+import { Suspense } from "react";
 
 export async function generateMetadata() {
   const title =
@@ -41,5 +43,7 @@ export async function generateMetadata() {
   };
 }
 export default async function Page(){
-    return <SearchClient />
+    return  <Suspense fallback={<FallbackLoader />}>
+            <SearchClient />
+            </Suspense>
 }
