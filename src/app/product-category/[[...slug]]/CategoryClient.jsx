@@ -735,7 +735,7 @@ return (
                                                     <div className="col-md-25" key={cats?.id}>
                                                         <Link href={`/product-category/${cats.slug}`} aria-label={cats?.name} className="category-item">
                                                             <div className="img-container">
-                                                                <img src={cats.image_url ? cats.image_url : "/assets/images/Placeholder_logo.webp"} alt="" loading="lazy" />
+                                                                <img src={cats.image_url ? cats.image_url : "/assets/images/Placeholder_logo.webp"} alt={cats?.name} title={cats?.name} loading="lazy" />
                                                                 <div className="category-action-wrap">
                                                                     <div className="category-action">
                                                                         <span className="icon">
@@ -745,7 +745,7 @@ return (
                                                                 </div>
                                                             </div>
                                                             <div className="content">
-                                                                <h2 aria-label={cats?.name}>{cats.name}</h2>
+                                                                <h2 aria-label={cats?.name} title={cats?.name}>{cats.name}</h2>
                                                                 <p>{cats?.products_count} Products</p>
                                                             </div>
                                                         </Link>

@@ -742,7 +742,7 @@ section.single-main { padding: 50px 0px 0px 0px; }
 .single-main .short-description a.btn-size-small{background-color: var(--yellow-color); color: #fff; padding: 5px 15px; margin: 5px; border-radius: 20px; font-weight: 500;}
 .single-main .short-description a.btn-size-small:hover{background-color: var(--dark-color);}
 .single-main .short-description .descritpion-wrapper{min-height: 40px; position: relative;}
-.single-main .short-description .btn-dark.btn-size-small{background-color: var(--dark-color); color: #fff; padding: 5px 15px; margin: 0px 5px; font-size: 14px; border-radius: 20px; font-weight: 500; border: 0px; outline: none;}
+.single-main .short-description .btn-dark.btn-size-small{background-color: var(--dark-color); color: #fff; padding: 5px 15px; margin: 15px 5px 0px 5px; font-size: 14px; border-radius: 20px; font-weight: 500; border: 0px; outline: none;}
 .single-main .short-description .btn-dark.btn-size-small:hover{background-color: var(--yellow-color);}
 .single-main .short-description .extra-info .share { font-size: 18px; color: #33333390; margin-bottom: 10px;}
 .single-main .short-description .extra-info .share a{ display: inline-block; width: 40px; height: 40px; border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 50%; text-align: center; align-content: center; margin-left: 10px; }

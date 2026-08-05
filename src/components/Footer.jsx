@@ -159,7 +159,7 @@ function Footer() {
                         <div className="single-box">
                             <h3>Resources</h3>
                             <ul>
-                                <li><Link href="/blog" className="nav-item" aria-label="News and Blogs">News and Blogs</Link></li>
+                                <li><Link href="/blogs" className="nav-item" aria-label="News and Blogs">News and Blogs</Link></li>
                                 {/* <li><a className="nav-item" href="https://new.dawnscientific.com/public/DSI-Brand_2022_8102022_12Page.pdf" target="_blank" aria-label="Catalog">Catalogue</a></li> */}
                                 <li><Link href="/literature" className="nav-item" aria-label="Literatur">Catalogue</Link></li>
                                 <li><a href="https://doc.dawnscientific.com/" className="nav-item" aria-label="COA and SDS">COA and SDS</a></li>
