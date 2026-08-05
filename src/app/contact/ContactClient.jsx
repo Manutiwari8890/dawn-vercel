@@ -118,7 +118,7 @@ export default function ContactClient() {
                                         </div>
                                         <div className="form-group col_12">
                                             <label>Your Message</label>
-                                            <textarea maxlength="200" className="form-control" name="message" rows="5" value={contact.message} placeholder="Your Message" onChange={handleContact} />
+                                            <textarea maxLength="200" className="form-control" name="message" rows="5" value={contact.message} placeholder="Your Message" onChange={handleContact} />
                                             {formError.message && <p className="error">{formError.message}</p>}
                                         </div>
                                         <div className="col_12">
