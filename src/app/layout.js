@@ -38,6 +38,24 @@ export default function RootLayout({ children }) {
     };
   }, []);
 
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Dawn Scientific",
+    url: "https://dawnscientific.com",
+    logo: "https://dawn-vercel.vercel.app/assets/images/Website-logo-1.webp",
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: "+973-802-1005",
+      contactType: "Customer Service",
+    },
+    sameAs: [
+      "https://facebook.com/company",
+      "https://linkedin.com/company/company"
+    ]
+  };
+
+
   return (
     <html
       lang="en"
@@ -72,6 +90,12 @@ export default function RootLayout({ children }) {
                       </Script>
                     </head>
                     <body>
+                      <script
+                        type="application/ld+json"
+                        dangerouslySetInnerHTML={{
+                          __html: JSON.stringify(organizationSchema),
+                        }}
+                      />
                       <Providers>
                         <Header onToggleCart={toggleCart} isOverlay={isOverlay} isCart={isCartOpen} />
                         <Sidebar isActive={isCartOpen} onClose={closeCart} />

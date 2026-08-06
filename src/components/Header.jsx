@@ -298,7 +298,7 @@ function Header({ onToggleCart, isOverlay, isCart }){
                                                 <Link href="/literature" aria-label="Literature">Literature</Link>
                                             </li>
                                             <li className="nav-item">
-                                                <Link href="/faqs" aria-label="FAQ">FAQ's</Link>
+                                                <Link href="/faq" aria-label="FAQ">FAQ's</Link>
                                             </li>
                                             <li className="nav-item">
                                                 <Link href="/join-us" aria-label="Join Us">Join Us</Link>
@@ -455,7 +455,7 @@ function Header({ onToggleCart, isOverlay, isCart }){
                                                         <Link href="/literature" aria-label="Literature">Literature</Link>
                                                     </li>
                                                     <li className="nav-item">
-                                                        <Link href="/faqs" aria-label="FAQ">FAQ's</Link>
+                                                        <Link href="/faq" aria-label="FAQ">FAQ's</Link>
                                                     </li>
                                                     <li className="nav-item">
                                                         <Link href="/join-us" aria-label="Join Us">Join Us</Link>

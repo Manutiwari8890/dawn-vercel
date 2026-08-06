@@ -163,7 +163,7 @@ function Footer() {
                                 {/* <li><a className="nav-item" href="https://new.dawnscientific.com/public/DSI-Brand_2022_8102022_12Page.pdf" target="_blank" aria-label="Catalog">Catalogue</a></li> */}
                                 <li><Link href="/literature" className="nav-item" aria-label="Literatur">Catalogue</Link></li>
                                 <li><a href="https://doc.dawnscientific.com/" className="nav-item" aria-label="COA and SDS">COA and SDS</a></li>
-                                <li><Link href="/faqs" className="nav-item" aria-label="FAQ's">FAQ's</Link></li>
+                                <li><Link href="/faq" className="nav-item" aria-label="FAQ's">FAQ's</Link></li>
                                 <li><Link href="/suppliers" className="nav-item" aria-label="Our Suppliers">Our Suppliers</Link></li>
                             </ul>
                         </div>

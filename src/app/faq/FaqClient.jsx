@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 const faqData = [
   {
@@ -286,7 +286,7 @@ export default function FaqClient () {
     const toggleFAQ = (index) => {
         setOpenIndex(openIndex === index ? null : index);
     };
-    <>
+    return <>
       <div className="faq_page">
         <div className="container">
           <ul className="accordion-list">

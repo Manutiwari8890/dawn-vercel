@@ -61,6 +61,25 @@ export default async function Page({params}){
     const {slug} = await params;
 
     const product = await getProduct(slug);
-
+    console.log(product)
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    image: product.image_url,
+    description: product.short_description,
+    sku: product.sku,
+    brand: {
+      "@type": "Brand",
+      name: product.brands[0].name,
+    },
+    offers: {
+      "@type": "Offer",
+      url: `https://dawnscientific.com/product/${product.slug}`,
+      priceCurrency: "USD",
+      price: product.discounted_price,
+      availability: "https://schema.org/InStock",
+    },
+  };
     return <ProductClient initialData={product} />
 }
