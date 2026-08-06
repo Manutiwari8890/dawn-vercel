@@ -1,4 +1,4 @@
-import BlogCategory from "./BlogCategory";
+import BlogClient from "./BlogClient";
 
 export const metadata = {
   title: "Blogs - Dawn scietific",
@@ -8,7 +8,7 @@ export const metadata = {
   keywords: ["scientific laboratory supplier in USA", "Scientific Products Distributor USA", "Laboratory Chemicals Supplier New Jersey", "Laboratory Solutions Provider", "Ready to use solutions", "HPLC Solvents", "GC solvents", "Trusted Laboratory Chemicals and Supplies Company in USA", "Laboratory Chemicals and Consumables Supplier for Research Labs", "ISO Certified Laboratory Supplier in New Jersey", "WBENC certified scientific supplier in USA", "Where can research laboratories buy scientific supplies in USA", "Who Is a Trusted Laboratory Supplier in New Jersey", "Stains and indicators for microbiology and histology", "high purity inorganic and organic reagents"],
 
   alternates: {
-    canonical: "https://dawnscientific.com/blogs",
+    canonical: "https://dawnscientific.com/blog",
   },
 
   robots: {
@@ -20,7 +20,7 @@ export const metadata = {
     title: "Blogs - Dawn scietific",
     description:
       "Find in-depth scientific insights, product reviews, brand highlights, and more on Dawn Scientific Blogs",
-    url: "https://dawnscientific.com/blogs",
+    url: "https://dawnscientific.com/blog",
     siteName: "Dawn Scientific",
     type: "website",
     locale: "en_IN",
@@ -48,6 +48,6 @@ export const metadata = {
 
 export default function Page(){
     return (
-        <BlogCategory />   
+        <BlogClient />   
     )
 }

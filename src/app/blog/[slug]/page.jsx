@@ -1,61 +1,53 @@
-import SingleBlogClient from './SingleBlogClient';
+import BlogCategory from "./BlogCategory";
 
-async function getBlog(slug) {
-    const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-    const res = await fetch(`${BASE_URL}blogs/${slug}`, {
-                    method: 'GET',
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
+export const metadata = {
+  title: "Blogs - Dawn scietific",
+  description:
+    "Find in-depth scientific insights, product reviews, brand highlights, and more on Dawn Scientific Blogs",
 
-  const result = await res.json();
-  return result.data;
-}
+  keywords: ["scientific laboratory supplier in USA", "Scientific Products Distributor USA", "Laboratory Chemicals Supplier New Jersey", "Laboratory Solutions Provider", "Ready to use solutions", "HPLC Solvents", "GC solvents", "Trusted Laboratory Chemicals and Supplies Company in USA", "Laboratory Chemicals and Consumables Supplier for Research Labs", "ISO Certified Laboratory Supplier in New Jersey", "WBENC certified scientific supplier in USA", "Where can research laboratories buy scientific supplies in USA", "Who Is a Trusted Laboratory Supplier in New Jersey", "Stains and indicators for microbiology and histology", "high purity inorganic and organic reagents"],
 
-export async function generateMetadata({ params }) {
-    const {slug} = await params;
-    const blog = await getBlog(slug);
-    const title =
-    blog.meta_title ||
-    `${blog.name} | Dawn Scientific`;
+  alternates: {
+    canonical: "https://dawnscientific.com/blog",
+  },
 
-  const description =
-    blog.meta_description ||
-    blog.short_description ||
-    `Buy ${blog.name} at best price `;
+  robots: {
+    index: true,
+    follow: true,
+  },
 
-  return {
-    title,
-    description, 
+  openGraph: {
+    title: "Blogs - Dawn scietific",
+    description:
+      "Find in-depth scientific insights, product reviews, brand highlights, and more on Dawn Scientific Blogs",
+    url: "https://dawnscientific.com/blog",
+    siteName: "Dawn Scientific",
+    type: "website",
+    locale: "en_IN",
 
-    keywords: blog.meta_keyword || `${blog?.name}, Dawn Scientific`,
+    images: [
+      {
+        url: "http://dawnscientific.com/assets/images/Dawn-scientific.webp",
+        width: 1200,
+        height: 630,
+        alt: "Dawn Scientific",
+      },
+    ],
+  },
 
-    alternates: {
-      canonical: `https://www.dawnscientific.com/blog/${slug}`,
-    },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blogs - Dawn scietific",
+    description:
+      "Find in-depth scientific insights, product reviews, brand highlights, and more on Dawn Scientific Blogs",
+    images: [
+      "http://dawnscientific.com/assets/images/Dawn-scientific.webp",
+    ],
+  },
+};
 
-    openGraph: {
-      type: "website",
-      title,
-      description,
-      url: `https://www.dawnscientific.com/blog/${slug}`,
-      siteName: "Lab Consumables, Chemicals & Equipment from Dawn Scientific",
-      images: [
-        {
-          url: blog.image_url,
-        },
-      ],
-    },
-
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description, 
-      images: [blog.image_url],
-    },
-  };
-}
-export default async function Page(){
-    return <SingleBlogClient />
+export default function Page(){
+    return (
+        <BlogCategory />   
+    )
 }

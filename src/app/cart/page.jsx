@@ -13,7 +13,6 @@ export default function Page() {
     const { user, logout, isLoggedIn, login } = useContext(AuthContext);
     const [popStatus, setPopStatus] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const token = user?.access_token;
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const [cartData, setCartData] = useState({});
     const [username, setUsername] = useState("");

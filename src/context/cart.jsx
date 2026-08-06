@@ -23,18 +23,12 @@ const [cartItems, setCartItems] = useState([]);
       console.error("Error parsing cart items from localStorage", err);
     }
   }, []);
-  if (typeof window !== "undefined") {
-    const getGuestKey = () => localStorage.getItem("guest_key_token");
-  }
 
 
   useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  if (typeof window !== "undefined") {
-    const token = localStorage.getItem("token");
-  }
   // // ---------------------------
   // // Helpers
   // // ---------------------------
@@ -89,10 +83,10 @@ const [cartItems, setCartItems] = useState([]);
     try {
       const response = await fetch(`${baseUrl}cart/${id}`, {
         method: "PUT",
-        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json" },
         body: JSON.stringify({
           quantity: quantity,
-          guest_token: getGuestKey()
+          guest_token: localStorage.getItem("guest_key_token")
         })
       })
 
@@ -117,9 +111,9 @@ const [cartItems, setCartItems] = useState([]);
     try {
       const response = await fetch(`${baseUrl}cart/${id}`, {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json" },
         body: JSON.stringify({
-          guest_token: getGuestKey()
+          guest_token: localStorage.getItem("guest_key_token")
         })
       })
 

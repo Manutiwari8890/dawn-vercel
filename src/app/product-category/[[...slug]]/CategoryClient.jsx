@@ -23,7 +23,7 @@ export default function CategoryClient() {
     const [sizes, setSizes] = useState([])
     const params = useParams();
 
-    const [category, subCategory, childrenCat, child] = params?.slug;
+    const [category, subCategory, childrenCat, child] = params?.slug || [];
 
     //let { category, subCategory, childrenCat, child } = useParams()
     const slug = child || childrenCat || subCategory || category || "";

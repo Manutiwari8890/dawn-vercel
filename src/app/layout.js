@@ -4,26 +4,10 @@ import Script from "next/script";
 import Providers from "./providers";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Sidebar from "@/components/Sidebar";
 
-
-export default function RootLayout({ children }) {
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isOverlay, setIsOverlay] = useState(false);
-
-  const toggleCart = () => {
-    document.documentElement.style.overflow = "hidden";
-    setIsCartOpen(prev => !prev);
-    setIsOverlay(prev => !prev);
-  };
-  const closeCart = () => {
-    document.documentElement.style.overflow = "auto";
-    setIsCartOpen(false);
-    setIsOverlay(false);
-  };
-
-  
+export default function RootLayout({ children }) {  
   useEffect(() => {
     const disableActions = (e) => {
       e.preventDefault();
@@ -97,10 +81,12 @@ export default function RootLayout({ children }) {
                         }}
                       />
                       <Providers>
-                        <Header onToggleCart={toggleCart} isOverlay={isOverlay} isCart={isCartOpen} />
-                        <Sidebar isActive={isCartOpen} onClose={closeCart} />
-                        {children}
-                        <Footer />
+                        <>
+                          <Header />
+                          <Sidebar />
+                          {children}
+                          <Footer />
+                        </>
                       </Providers>
                     </body>
                   </html>

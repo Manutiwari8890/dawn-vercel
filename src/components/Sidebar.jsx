@@ -2,11 +2,13 @@ import Link from 'next/link';
 import { useContext, useState } from 'react'
 import { CartContext } from '../context/cart'
 import { AuthContext } from '../context/AuthContext';
+import { useUI } from '@/context/UiContext';
 
-function Sidebar({ isActive, onClose }){
-    const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, isCartOpen } = useContext(CartContext)
+function Sidebar(){
+    const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal } = useContext(CartContext)
     const { user, logout, isLoggedIn } = useContext(AuthContext);
-
+    const { toggleCart, isCartOpen, isOverlay } = useUI();
+    
     const [loadingButton, setLoadingButton] = useState(null);
     const handleRemove = async (id)=>{
         setLoadingButton(id);
@@ -17,12 +19,12 @@ function Sidebar({ isActive, onClose }){
     }
     return (
         <>
-            <div className={`cart-sidebar ${(isActive || isCartOpen) ? 'active' : ''}`}>
+            <div className={`cart-sidebar ${(isCartOpen) ? 'active' : ''}`}>
                 <div className="sidebar-wrapper">
                     <div className="products-wrapper">
                         <div className="wrap-title">
                             <h2>Shopping Cart</h2>
-                            <button className="close-cart" onClick={onClose} aria-label="Close Cart">
+                            <button className="close-cart" onClick={() => toggleCart()} aria-label="Close Cart">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="18" height="18"><path d="M183.1 137.4C170.6 124.9 150.3 124.9 137.8 137.4C125.3 149.9 125.3 170.2 137.8 182.7L275.2 320L137.9 457.4C125.4 469.9 125.4 490.2 137.9 502.7C150.4 515.2 170.7 515.2 183.2 502.7L320.5 365.3L457.9 502.6C470.4 515.1 490.7 515.1 503.2 502.6C515.7 490.1 515.7 469.8 503.2 457.3L365.8 320L503.1 182.6C515.6 170.1 515.6 149.8 503.1 137.3C490.6 124.8 470.3 124.8 457.8 137.3L320.5 274.7L183.1 137.4z" fill="currentColor" /></svg>
                             </button>      
                         </div>
@@ -50,10 +52,10 @@ function Sidebar({ isActive, onClose }){
                                         <div className="cart-item">
                                             <div className="item-details">
                                                 <div className="cart-img">
-                                                    <Link href={`/product/${item?.slug}`} onClick={onClose}><img src={item?.image_url} width="60" height="60"  loading="lazy"  /></Link>
+                                                    <Link href={`/product/${item?.slug}`} onClick={toggleCart}><img src={item?.image_url} width="60" height="60"  loading="lazy"  /></Link>
                                                 </div>
                                                 <div className="cart-info">
-                                                    <h4><Link href={`/product/${item?.slug}`} onClick={onClose}>{item?.name}</Link></h4>
+                                                    <h4><Link href={`/product/${item?.slug}`} onClick={toggleCart}>{item?.name}</Link></h4>
                                                     <p className="cart-qty">{item?.quantity}x - <span className="cart-amount">
                                                         ${isLoggedIn ? 
                                                             item.discounted_price :
@@ -83,8 +85,8 @@ function Sidebar({ isActive, onClose }){
                                 <h3 className="price">${getCartTotal()}</h3>
                             </div>
                             <div className="d-flex gap-20">
-                                <Link href="/cart" className="btn btn-primary" onClick={onClose}>View Cart</Link>
-                                <Link href="/checkout" className="btn btn-secondary" onClick={onClose}>Checkout</Link>
+                                <Link href="/cart" className="btn btn-primary" onClick={() => toggleCart()}>View Cart</Link>
+                                <Link href="/checkout" className="btn btn-secondary" onClick={() => toggleCart()}>Checkout</Link>
                             </div>
                         </div>
                     ))}

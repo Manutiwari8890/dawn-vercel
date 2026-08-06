@@ -4,18 +4,19 @@ import { AuthProvider } from "@/context/AuthContext";
 import { WishListProvider } from "@/context/WishListContext";
 import { LoaderProvider } from "@/context/LoaderContext";
 import { CartProvider } from "@/context/cart";
-
+import { UIProvider } from "@/context/UiContext";
 
 export default function Providers({ children }) {
-      console.log("Providers rendered");
 
     return (
         <WishListProvider>
             <CartProvider>
                 <AuthProvider>
-                    <LoaderProvider>
-                    {children}
-                    </LoaderProvider>
+                    <UIProvider>
+                        <LoaderProvider>
+                            {children}
+                        </LoaderProvider>
+                    </UIProvider>
                 </AuthProvider>
             </CartProvider>
         </WishListProvider>

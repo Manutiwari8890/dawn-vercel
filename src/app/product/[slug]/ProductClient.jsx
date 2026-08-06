@@ -20,11 +20,12 @@ import {
   LoadCanvasTemplateNoReload ,
   validateCaptcha
 } from "react-simple-captcha";
+import { useUI } from '@/context/UiContext';
 
 
-export default function ProductClient({ onToggleCart, initialData  }) {
+export default function ProductClient({ initialData  }) {
     const navigate = useRouter();
-    
+    const { toggleCart } = useUI()
     const [token, setToken] = useState(null);
     const [popStatus, setPopStatus] = useState(false);
     const [captchaInput, setCaptchaInput] = useState("");
@@ -146,9 +147,7 @@ export default function ProductClient({ onToggleCart, initialData  }) {
         const res = await addToCart(product);
 
         if (res) {
-            if (onToggleCart) {
-                onToggleCart(); // open the sidebar
-            }
+            toggleCart(); // open the sidebar
             setLoadingButton(null);
         }
     };

@@ -5,14 +5,16 @@ import Link from "next/link";
 import { CartContext } from '../context/cart'
 import { AuthContext } from '../context/AuthContext';
 import { useLoader } from "../context/LoaderContext";
+import { useUI } from '@/context/UiContext';
 
-
-function Header({ onToggleCart, isOverlay, isCart }){
+function Header(){
     const pathname = usePathname();
     const router = useRouter();
+    const { toggleCart, isCartOpen, isOverlay } = useUI();
+
 
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-    const { getTotalItem, fetchCartFromApi, isCartOpen } = useContext(CartContext)
+    const { getTotalItem, fetchCartFromApi } = useContext(CartContext)
     const { logout, isLoggedIn } = useContext(AuthContext);
     const [isOpen, setIsOpen] = useState(false);
     const [menus, setMenus] = useState([]);
@@ -76,7 +78,7 @@ function Header({ onToggleCart, isOverlay, isCart }){
     
     const handleSideToggle = () => {
         fetchCartFromApi(); 
-        onToggleCart();
+        toggleCart();
     }
 
     useEffect(() => {
@@ -199,17 +201,6 @@ function Header({ onToggleCart, isOverlay, isCart }){
     return (
         <>
             <header ref={menuRef}>
-                {(isOpen || isOverlay) &&
-                    <div className={`body-overlay active`} 
-                        onClick={() => {
-                            if(isCartOpen || isCart)  onToggleCart();
-                            document.documentElement.style.overflow = "auto";
-                            setIsOpen(false);
-                        }}>
-                    </div>
-                }
-                    
-
                 <div className="top-head">
                     <div className="container_fluid">
                         <div className="d-flex justify-content-space-between">
@@ -298,7 +289,7 @@ function Header({ onToggleCart, isOverlay, isCart }){
                                                 <Link href="/literature" aria-label="Literature">Literature</Link>
                                             </li>
                                             <li className="nav-item">
-                                                <Link href="/faq" aria-label="FAQ">FAQ's</Link>
+                                                <Link href="/faqs" aria-label="FAQ">FAQ's</Link>
                                             </li>
                                             <li className="nav-item">
                                                 <Link href="/join-us" aria-label="Join Us">Join Us</Link>
@@ -455,7 +446,7 @@ function Header({ onToggleCart, isOverlay, isCart }){
                                                         <Link href="/literature" aria-label="Literature">Literature</Link>
                                                     </li>
                                                     <li className="nav-item">
-                                                        <Link href="/faq" aria-label="FAQ">FAQ's</Link>
+                                                        <Link href="/faqs" aria-label="FAQ">FAQ's</Link>
                                                     </li>
                                                     <li className="nav-item">
                                                         <Link href="/join-us" aria-label="Join Us">Join Us</Link>
@@ -665,6 +656,15 @@ function Header({ onToggleCart, isOverlay, isCart }){
                     </div>    
                 </div>       
             </header>
+            {(isOpen || isOverlay) &&
+                <div className={`body-overlay active`}
+                    onClick={() => {
+                        if (isCartOpen) toggleCart();
+                        document.documentElement.style.overflow = "auto";
+                        setIsOpen(false);
+                    }}>
+                </div>
+            }
         </>
     )
 }

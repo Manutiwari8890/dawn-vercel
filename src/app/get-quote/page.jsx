@@ -1,14 +1,14 @@
-import FaqClient from "./FaqClient";
+import QuoteClient from "./QuoteClient";
 
 export const metadata = {
-    title: "Contact us for any of your Laboratory requirements - Dawnscietific",
+    title: "Get quote - Dawnscietific",
     description:
-        "Contact us for any of your Laboratory requirements on sales@dawnscientific.com, call us on 1-800-DAWN-SCI or 732-902-6300",
+        "Request for Quotation Please provide us with your current chemical needs and let our team do the work on getting you the best prices on all your chemical needs. Catalog# Product* Size* (Pack Size) Quantity* Your Name Your Email Phone Number Company Your Message",
 
     keywords: ["scientific laboratory supplier in USA", "Scientific Products Distributor USA", "Laboratory Chemicals Supplier New Jersey", "Laboratory Solutions Provider", "Ready to use solutions", "HPLC Solvents", "GC solvents", "Trusted Laboratory Chemicals and Supplies Company in USA", "Laboratory Chemicals and Consumables Supplier for Research Labs", "ISO Certified Laboratory Supplier in New Jersey", "WBENC certified scientific supplier in USA", "Where can research laboratories buy scientific supplies in USA", "Who Is a Trusted Laboratory Supplier in New Jersey", "Stains and indicators for microbiology and histology", "high purity inorganic and organic reagents"],
 
     alternates: {
-        canonical: "https://dawnscientific.com/contact",
+        canonical: "https://dawnscientific.com/get-quote",
     },
 
     robots: {
@@ -17,10 +17,10 @@ export const metadata = {
     },
 
     openGraph: {
-        title: "Contact us for any of your Laboratory requirements - Dawnscietific",
+        title: "Get quote - Dawnscietific",
         description:
-            "Contact us for any of your Laboratory requirements on sales@dawnscientific.com, call us on 1-800-DAWN-SCI or 732-902-6300",
-        url: "https://dawnscientific.com/contact",
+            "Request for Quotation Please provide us with your current chemical needs and let our team do the work on getting you the best prices on all your chemical needs. Catalog# Product* Size* (Pack Size) Quantity* Your Name Your Email Phone Number Company Your Message",
+        url: "https://dawnscientific.com/get-quote",
         siteName: "Dawn Scientific",
         type: "website",
         locale: "en_IN",
@@ -37,9 +37,9 @@ export const metadata = {
 
     twitter: {
         card: "summary_large_image",
-        title: "Contact us for any of your Laboratory requirements - Dawnscietific",
+        title: "Get quote - Dawnscietific",
         description:
-            "Contact us for any of your Laboratory requirements on sales@dawnscientific.com, call us on 1-800-DAWN-SCI or 732-902-6300",
+            "Request for Quotation Please provide us with your current chemical needs and let our team do the work on getting you the best prices on all your chemical needs. Catalog# Product* Size* (Pack Size) Quantity* Your Name Your Email Phone Number Company Your Message",
         images: [
             "http://dawnscientific.com/assets/images/Dawn-scientific.webp",
         ],
@@ -50,7 +50,7 @@ export const metadata = {
 export default function Page() {
     return (
         <>
-            <FaqClient />
+            <QuoteClient />
         </>
     )
 }
