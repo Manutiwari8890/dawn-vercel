@@ -50,13 +50,6 @@ export default function Page(){
     
     return (
         <>
-            <Helmet>
-                <title>Food & Beverage Testing - Dawn Scientific</title>
-                <meta
-                    name="description"
-                    content=""
-                />
-            </Helmet>
             <div className='wrapper industry_inner'>
                 <section className='ind_section back_gray'>
                     <div className='container'>
