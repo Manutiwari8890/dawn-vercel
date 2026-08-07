@@ -84,7 +84,9 @@ export default function RootLayout({ children }) {
                         <>
                           <Header />
                           <Sidebar />
-                          {children}
+                            <main>
+                              {children}
+                            </main>
                           <Footer />
                         </>
                       </Providers>
