@@ -10,7 +10,8 @@ import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { AuthContext } from '@/context/AuthContext';
 
-export default function CategoryClient() {
+export default function CategoryClient({initData}) {
+    console.log(initData)
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const [loadSize, setLoadSize] = useState(false)
     const { toggleWishlist, wishlistLoadingIds, wishList, fetchWishList } = useContext(WishListContext);
@@ -27,9 +28,9 @@ export default function CategoryClient() {
 
     //let { category, subCategory, childrenCat, child } = useParams()
     const slug = child || childrenCat || subCategory || category || "";
-    const [categories, setCategory] = useState([]);
-    const [products, setProducts] = useState([]);
-    const [brands, setBrands] = useState([]);
+    const [categories, setCategory] = useState(initData?.categories?.data);
+    const [products, setProducts] = useState(initData?.products?.data);
+    const [brands, setBrands] = useState(initData?.products?.brands);
     const [readMore, setReadMore] = useState(false);
     const [filter, setFilter] = useState(false);
     const [catPro, setCatePro] = useState([]);
@@ -46,7 +47,7 @@ export default function CategoryClient() {
     const alphabet = searchParams.get('alphabet');
     const page = searchParams.get("page");
     const [openToggle, setOpenToggle] = useState(null);
-    const [catDetails, setCatDetails] = useState({});
+    const [catDetails, setCatDetails] = useState(initData?.categoryDetails?.data);
 
 
     useEffect(() => {
@@ -88,14 +89,11 @@ export default function CategoryClient() {
                 if (prev === id) {
                     return parent || null;
                 }
-
                 return id;
             }
         });
     };
-
     const { startLoading, stopLoading } = useLoader();
-
     useEffect(() => {
         startLoading();
         const fetchCategory = async () => {
@@ -113,7 +111,7 @@ export default function CategoryClient() {
         }
         fetchCategory();
     },
-        []);
+    []);
 
     useEffect(() => {
         const getCatDetails = async () => {
@@ -123,7 +121,6 @@ export default function CategoryClient() {
                 if (!response.ok) {
                     throw new Error("Category Details Fetch Failed !");
                 }
-
                 let result = await response.json();
                 setCatDetails(result.data);
             } catch (err) {
@@ -132,7 +129,6 @@ export default function CategoryClient() {
                 stopLoading();
             }
         }
-
         if (slug) {
             getCatDetails();
         }
@@ -216,14 +212,6 @@ export default function CategoryClient() {
         fetchProducts();
     }, [slug, filterBrand, alphabet, searchParams.toString(), categories.length, page]);
 
-
-    const [searchText, setSearchText] = useState("");
-
-    function handleSubmit(e) {
-        e.preventDefault();
-        router.push(`/search?s=${searchText}`, { state: { value: searchText } });
-    }
-
     function checkWishlist(id) {
         return wishList.some(item => item.id === id);
     }
@@ -232,12 +220,10 @@ export default function CategoryClient() {
         if (!slug) {
             return categories;
         }
-
         for (const cat of categories) {
             if (cat.slug === slug) {
                 return cat.children_recursive || [];
             }
-
             // search inside children_recursive 
             if (cat.children_recursive && cat.children_recursive.length > 0) {
                 const found = findCategoryChildren(cat.children_recursive, slug);

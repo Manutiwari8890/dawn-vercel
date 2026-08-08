@@ -8,20 +8,16 @@ export const WishListContext = createContext();
 
 export const WishListProvider = ({ children }) => {
     const [wishlistLoadingIds, setWishlistLoadingIds] = useState([]);
-    const [token, setToken] = useState(null)
     const router = useRouter();
 
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-    useEffect(() => {
-        setToken(localStorage.getItem("token"));
-    })
 
     const [refreshWishList, setRefreshWishList] = useState(false);
 
     const [wishList, setWishList] = useState([]);
 
     const toggleWishlist = async (id) => {
-        if(!token){
+        if(!localStorage.getItem("token")){
             router.push("/login");
             return;
         }
@@ -38,7 +34,7 @@ export const WishListProvider = ({ children }) => {
         try {
             const response = await fetch(`${baseUrl}wishlist/toggle/${id}`, {
                     method:"POST",
-                    headers:{"Authorization" : `Bearer ${token}`,  "Content-Type": "application/json"},
+                    headers:{"Authorization" : `Bearer ${localStorage.getItem("token")}`,  "Content-Type": "application/json"},
                 });
             const data = await response.json();
 
@@ -71,11 +67,11 @@ export const WishListProvider = ({ children }) => {
 
 
         const fetchWishList = async () => {
-            if (!token) return;
+            if (!localStorage.getItem("token")) return;
             try {
                 const response = await fetch(`${baseUrl}wishlist`, {
                     method: "GET",
-                    headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" }
+                    headers: { "Authorization": `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json" }
                 });
                 if (!response.ok) throw new Error("Failed to fetch product WishList");
                 const data = await response.json();

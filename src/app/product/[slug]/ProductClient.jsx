@@ -38,7 +38,6 @@ export default function ProductClient({ initialData  }) {
     const [encodedUrl, setEncodedUrl] = useState("");
     const [encodedTitle, setEncodedTitle] = useState("");
     const [encodedImage, setEncodedImage] = useState("");
-    const [captchaValue, setCaptchaValue] = useState(null);
     const [captchaMessage, setCaptchaMessage] = useState("");
 
     useEffect(() => {
