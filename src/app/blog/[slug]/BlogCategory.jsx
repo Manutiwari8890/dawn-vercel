@@ -5,10 +5,10 @@ import {useParams, useSearchParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useLoader } from "@/context/LoaderContext";
 
-function BlogCategory()
+function BlogCategory({initData})
 {
         const { startLoading, stopLoading } = useLoader();
-        const [blogs, setBlogs] = useState([]);
+        const [blogs, setBlogs] = useState(initData);
         const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
         let {slug} = useParams()
         const [meta, setMeta] = useState({});
@@ -18,9 +18,7 @@ function BlogCategory()
         useEffect(() => {
             startLoading();
             const fetchBlog = async () => {
-                console.log(searchParams)
                 const page = searchParams.get('page')
-
                 try {
                     const response = await fetch(`${baseUrl}blogs/category/${slug}?per_page=12${page ? `&page=${page}` : ''}`); // Example API endpoint
                     if (!response.ok) {

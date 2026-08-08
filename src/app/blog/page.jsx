@@ -1,5 +1,19 @@
 import BlogClient from "./BlogClient";
 
+const getBlogDetail = async () => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}blogs`,
+    {
+      cache: "no-store"
+    }
+  );
+  if (!res.ok) {
+    throw new Error("Failed to fetch blogs");
+  }
+  return res.json();
+}
+
+
 export const metadata = {
   title: "Blogs - Dawn scietific",
   description:
@@ -46,8 +60,9 @@ export const metadata = {
   },
 };
 
-export default function Page(){
+export default async function Page(){
+    const data = await getBlogDetail();
     return (
-        <BlogClient />   
+        <BlogClient initData={data?.data} />   
     )
 }

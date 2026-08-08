@@ -5,10 +5,10 @@ import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useLoader } from "@/context/LoaderContext";
 
-export default function SingleBlogClient() {
+export default function SingleBlogClient({initData}) {
     const { startLoading, stopLoading } = useLoader();
     const { slug } = useParams()
-    const [detail, setDetail] = useState({});
+    const [detail, setDetail] = useState(initData);
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
     useEffect(() => {
@@ -62,7 +62,7 @@ export default function SingleBlogClient() {
                                 </div>
                             </div>
                             <div className="desc">
-                                <p dangerouslySetInnerHTML={{ __html: detail?.content }}></p>
+                                <div dangerouslySetInnerHTML={{ __html: detail?.content }}></div>
                             </div>
                         </div>
                     </div>

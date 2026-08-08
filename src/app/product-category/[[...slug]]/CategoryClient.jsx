@@ -654,7 +654,7 @@ return (
                                             {catDetails?.description &&
                                                 <>
                                                     <div className={`details ${readMore ? 'active' : ''}`}>
-                                                        <p dangerouslySetInnerHTML={{ __html: catDetails?.description }}></p>
+                                                        <div dangerouslySetInnerHTML={{ __html: catDetails?.description }}></div>
                                                     </div>
                                                     <button className="btn-collapse site-title" onClick={() => {
                                                         if (readMore) window.scrollTo({ top: 100, left: 0, behavior: "smooth" });

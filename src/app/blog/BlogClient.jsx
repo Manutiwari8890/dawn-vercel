@@ -4,30 +4,8 @@ import { useState, useEffect, Fragment } from "react";
 import Link from "next/link";
 import { useLoader } from "@/context/LoaderContext";
 
-export default function BlogClient() {
-    const { startLoading, stopLoading } = useLoader();
-    const [blogs, setBlogs] = useState([]);
-    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-    useEffect(() => {
-        startLoading();
-        const fetchBlog = async () => {
-            try {
-                const response = await fetch(`${baseUrl}blogs`); // Example API endpoint
-                if (!response.ok) {
-                    throw new Error('Failed to fetch product data');
-                }
-                const data = await response.json();
-                setBlogs(data['data'])
-                stopLoading();
-            } catch (err) {
-                console.error(err.message);
-            }
-        };
-
-        fetchBlog();
-    },
-        []);
+export default function BlogClient({initData}) {
+    const [blogs, setBlogs] = useState(initData);
 
     return (
         <>
@@ -41,7 +19,6 @@ export default function BlogClient() {
                         </div>
                     </div>
                 </section>
-
                 <section className="knowledge">
                     <div className="container">
                         {blogs &&

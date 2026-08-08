@@ -1,5 +1,19 @@
 import BlogCategory from "./BlogCategory";
 
+const getBlogDetail = async (slug) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}blogs/category/${slug}`,
+    {
+      cache: "no-store"
+    }
+  );
+  if (!res.ok) {
+    throw new Error("Failed to fetch blogs");
+  }
+  return res.json();
+}
+
+
 export const metadata = {
   title: "Blogs - Dawn scietific",
   description:
@@ -46,8 +60,10 @@ export const metadata = {
   },
 };
 
-export default function Page(){
+export default async function Page({ params }){
+  const { slug } = await params;  
+  const {data} = await getBlogDetail(slug)
     return (
-        <BlogCategory />   
+        <BlogCategory  initData={data} />   
     )
 }

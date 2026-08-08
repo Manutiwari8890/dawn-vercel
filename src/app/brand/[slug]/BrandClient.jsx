@@ -11,7 +11,7 @@ import { useLoader } from '@/context/LoaderContext';
 import { WishListContext } from '@/context/WishListContext';
 
 
-export default function BrandClient() {
+export default function BrandClient({initData}) {
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const [loadSize, setLoadSize] = useState(false)
     const [sizes, setSizes] = useState([])
@@ -26,14 +26,14 @@ export default function BrandClient() {
 
     let { slug } = useParams()
     const brand = slug || "";
-    const [categories, setCategory] = useState([]);
-    const [products, setProducts] = useState([]);
-    const [brandDetail, setBrandDetail] = useState({});
+    const [categories, setCategory] = useState(initData?.categories?.data);
+    const [products, setProducts] = useState(initData?.products?.data);
+    const [brandDetail, setBrandDetail] = useState(initData?.brandDetail?.data);
     const [readMore, setReadMore] = useState(false);
 
     const [brands, setBrands] = useState([]);
     const [filter, setFilter] = useState(false);
-    const [meta, setMeta] = useState({});
+    const [meta, setMeta] = useState(initData?.products?.data?.meta);
     const [recent, setRecent] = useState([]);
     const [initPrice, setinitPrice] = useState({
         min: 0,
@@ -557,7 +557,7 @@ export default function BrandClient() {
                                                         </div>
                                                         <div className="col-md-7">
                                                             <div className={`details ${readMore ? 'active' : ''}`}>
-                                                                <p dangerouslySetInnerHTML={{ __html: brandDetail?.description }}></p>
+                                                                <div dangerouslySetInnerHTML={{ __html: brandDetail?.description }}></div>
                                                             </div>
                                                             <button className="btn-collapse site-title" onClick={() => {
                                                                 if (readMore) window.scrollTo({ top: 100, left: 0, behavior: "smooth" });
