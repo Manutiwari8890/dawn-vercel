@@ -71,7 +71,7 @@ export default function BlogClient() {
                                         ))}
                                     </div>
                                     <div className="btn-wrap">
-                                        <Link href={`/blogs/${blog?.slug}`} className="btn btn-secondary">SEE MORE</Link>
+                                        <Link href={`/blog/${blog?.slug}`} className="btn btn-secondary">SEE MORE</Link>
                                     </div>
                                 </Fragment>
                             ))
