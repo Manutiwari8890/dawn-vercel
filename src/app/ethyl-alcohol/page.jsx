@@ -1,7 +1,8 @@
 "use client";
 import { useState } from 'react';
+import Link from 'next/link';
 
-function EthylAlcohol() {
+export default function Page() {
     const [readMore, setReadMore] = useState(false);
 
     return (
@@ -130,46 +131,46 @@ function EthylAlcohol() {
             <div className='container applications_brands applications_brands_inner'>
                 <div className='row'>
                     <div className='apl_col'>
-                        <NavLink to="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-140-proof" title="Accuris" className='apl_fill'>
+                        <Link href="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-140-proof" title="Accuris" className='apl_fill'>
                             <img loading="lazy" decoding="async" width="422" height="203" src="/assets/images/13_Brand_Greenfield-300x300.webp" className="attachment-full size-full wd-lazy-fade wd-loaded" alt="" title="Accuris Logo  Dawn Scientific" />
-                        </NavLink>
+                        </Link>
                         <h3>Ethyl Alcohol 140 Proof</h3>
-                        <NavLink to="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-140-proof" className='apl_link'>6 products</NavLink>
+                        <Link href="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-140-proof" className='apl_link'>6 products</Link>
                     </div>
                     <div className='apl_col'>
-                        <NavLink to="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-190-proof" title="Accuris" className='apl_fill'>
+                        <Link href="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-190-proof" title="Accuris" className='apl_fill'>
                             <img loading="lazy" decoding="async" width="422" height="203" src="/assets/images/13_Brand_Greenfield-300x300.webp" className="attachment-full size-full wd-lazy-fade wd-loaded" alt="" title="Accuris Logo  Dawn Scientific" />
-                        </NavLink>
+                        </Link>
                         <h3>Ethyl Alcohol 190 Proof</h3>
-                        <NavLink to="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-190-proof" className='apl_link'>44 products</NavLink>
+                        <Link href="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-190-proof" className='apl_link'>44 products</Link>
                     </div>
                     <div className='apl_col'>
-                        <NavLink to="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-191-proof" title="Accuris" className='apl_fill'>
+                        <Link href="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-191-proof" title="Accuris" className='apl_fill'>
                             <img loading="lazy" decoding="async" width="422" height="203" src="/assets/images/13_Brand_Greenfield-300x300.webp" className="attachment-full size-full wd-lazy-fade wd-loaded" alt="" title="Accuris Logo  Dawn Scientific" />
-                        </NavLink>
+                        </Link>
                         <h3>Ethyl Alcohol 191 Proof</h3>
-                        <NavLink to="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-191-proof" className='apl_link'>1 products</NavLink>
+                        <Link href="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-191-proof" className='apl_link'>1 products</Link>
                     </div>
                     <div className='apl_col'>
-                        <NavLink to="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-192-proof" title="Accuris" className='apl_fill'>
+                        <Link href="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-192-proof" title="Accuris" className='apl_fill'>
                             <img loading="lazy" decoding="async" width="422" height="203" src="/assets/images/13_Brand_Greenfield-300x300.webp" className="attachment-full size-full wd-lazy-fade wd-loaded" alt="" title="Accuris Logo  Dawn Scientific" />
-                        </NavLink>
+                        </Link>
                         <h3>Ethyl Alcohol 192 Proof</h3>
-                        <NavLink to="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-192-proof" className='apl_link'>2 products</NavLink>
+                        <Link href="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-192-proof" className='apl_link'>2 products</Link>
                     </div>
                     <div className='apl_col'>
-                        <NavLink to="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-200-proof" title="Accuris" className='apl_fill'>
+                        <Link href="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-200-proof" title="Accuris" className='apl_fill'>
                             <img loading="lazy" decoding="async" width="422" height="203" src="/assets/images/13_Brand_Greenfield-300x300.webp" className="attachment-full size-full wd-lazy-fade wd-loaded" alt="" title="Accuris Logo  Dawn Scientific" />
-                        </NavLink>
+                        </Link>
                         <h3>Ethyl Alcohol 200 Proof</h3>
-                        <NavLink to="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-200-proof" className='apl_link'>19 products</NavLink>
+                        <Link href="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-200-proof" className='apl_link'>19 products</Link>
                     </div>
                     <div className='apl_col'>
-                        <NavLink to="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-40-proof" title="Accuris" className='apl_fill'>
+                        <Link href="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-40-proof" title="Accuris" className='apl_fill'>
                             <img loading="lazy" decoding="async" width="422" height="203" src="/assets/images/13_Brand_Greenfield-300x300.webp" className="attachment-full size-full wd-lazy-fade wd-loaded" alt="" title="Accuris Logo  Dawn Scientific" />
-                        </NavLink>
+                        </Link>
                         <h3>Ethyl Alcohol 40 Proof</h3>
-                        <NavLink to="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-40-proof" className='apl_link'>2 products</NavLink>
+                        <Link href="/product-category/lab-reagents/alcohols/ethyl-alcohol/ethyl-alcohol-40-proof" className='apl_link'>2 products</Link>
                     </div>
                     
                 </div>

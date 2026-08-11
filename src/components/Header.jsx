@@ -283,7 +283,7 @@ function Header(){
                                     </li>
                                     
                                     <li className={`nav-item has-children ${activeMenuId === 'support' ? "open" : ""}`} onClick={() => {toggleMenu('support')}}>
-                                        <Link href="/support" rel="noopener noreferrer">Support</Link>
+                                        <Link href="" rel="noopener noreferrer">Support</Link>
                                         <ul className="sub-menu">
                                             <li className="nav-item">
                                                 <Link href="/literature" aria-label="Literature">Literature</Link>
