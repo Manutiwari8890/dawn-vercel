@@ -455,12 +455,12 @@ export default function ProductClient({ initialData  }) {
                                                     <>
                                                         {(Number(data?.price)>0) ?
                                                             (
-                                                                isLoggedIn ?
+                                                                (isLoggedIn && data?.price != data?.discounted_price) ?
                                                                 <>
                                                                     <del>${data?.price}</del>
                                                                     <span className="price">${data?.discounted_price}</span>
                                                                 </> :
-                                                                <span className="price">${data?.price}</span>
+                                                                <span className="price">${data?.discounted_price}</span>
                                                             ) : 
                                                             ''
                                                         }
