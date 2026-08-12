@@ -83,12 +83,18 @@ function Header(){
 
     useEffect(() => {
         startLoading();
-        fetch(`${baseUrl}get-front-category`)
+        fetch(`${baseUrl}get-front-category`, {
+            method : "GET",
+            headers: { "Authorization": `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json" },
+        })
             .then((res) => {
                 if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
                 return res.json();
             })
             .then(({ data }) => {
+                if(!data?.isLogin){
+                    localStorage.clear()
+                }
                 const formattedMenus = data?.header?.map((menu) => {
                     const mergedChildren = menu.children_recursive_front.flatMap((f) => {
                         if (f.children_recursive?.length) {

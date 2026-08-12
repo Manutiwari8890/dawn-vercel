@@ -26,7 +26,6 @@ export default function Index() {
   const [blogs, setBlogs] = useState([]);
   const [brands, setBrands] = useState([]);
   const [frontProducts, setFrontProducts] = useState([]);
-
   const [activeTab, setActiveTab] = useState("");
   const activeTabData = topBrands[0]?.children_recursive?.find(
     tab => tab.id === activeTab
