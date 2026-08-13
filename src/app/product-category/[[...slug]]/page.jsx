@@ -30,7 +30,7 @@ async function getProducts(slug, searchParams) {
     }
   );
   if (!res.ok) {
-    throw new Error("Failed to fetch products");
+    throw new Error("Failed to fetch products", res);
   }
   return res.json();
 }
@@ -41,6 +41,7 @@ async function getCategories() {
       cache: "no-store"
     }
   );
+  console.log(res)
   if (!res.ok) {
     throw new Error("Failed to fetch Categories");
   }
@@ -63,9 +64,9 @@ async function getCategoryDetails(slug) {
 export async function generateMetadata({ params }) {
   const {slug} = await params;
 
-  const [category, subCategory, childrenCat, child] = slug;
+  const [category, subCategory, childrenCat, child] = slug || [];
   const currentSlug = child || childrenCat || subCategory || category || "";
-  const categoryDetails = await getCategoryDetails(currentSlug);
+  const categoryDetails = currentSlug ? await getCategoryDetails(currentSlug) : {data : {name : "Lab Consumables, Chemicals &amp; Equipment from Dawn Scientific", description: "Buy high-quality laboratory equipment, chemicals, and supplies online at Dawn Scientific. Fast delivery, safe payment, and expert support."}};
   
   const title =
     categoryDetails?.data?.meta_title ||
@@ -110,12 +111,12 @@ export async function generateMetadata({ params }) {
 export default async function Page({ params, searchParams }) {
   const { slug } = await params;
   const filters = await searchParams;
-  const [category, subCategory, childrenCat, child] = slug;
+  const [category, subCategory, childrenCat, child] = slug || [];
 
   const currentSlug = child || childrenCat || subCategory || category || "";
 
 
-  const products = await getProducts(currentSlug, filters)
+  const products = currentSlug ?  await getProducts(currentSlug, filters) : {products : {data : []}};
   const categories = await getCategories();
   const categoryDetails = await getCategoryDetails(currentSlug);
 

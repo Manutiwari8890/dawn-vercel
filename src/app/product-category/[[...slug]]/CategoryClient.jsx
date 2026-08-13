@@ -136,7 +136,7 @@ export default function CategoryClient({initData}) {
 
 
     useEffect(() => {
-        if (!categories || categories.length === 0) return;
+        if (!categories || categories?.length === 0) return;
 
         const fetchProducts = async () => {
             setFilter(false);
@@ -210,7 +210,7 @@ export default function CategoryClient({initData}) {
         };
 
         fetchProducts();
-    }, [slug, filterBrand, alphabet, searchParams.toString(), categories.length, page]);
+    }, [slug, filterBrand, alphabet, searchParams.toString(), categories?.length, page]);
 
     function checkWishlist(id) {
         return wishList.some(item => item.id === id);
@@ -225,7 +225,7 @@ export default function CategoryClient({initData}) {
                 return cat.children_recursive || [];
             }
             // search inside children_recursive 
-            if (cat.children_recursive && cat.children_recursive.length > 0) {
+            if (cat.children_recursive && cat.children_recursive?.length > 0) {
                 const found = findCategoryChildren(cat.children_recursive, slug);
                 if (found) return found;
             }
@@ -423,7 +423,7 @@ return (
                                         <div className="widget">
                                             <h4>Brands</h4>
                                             <ul className="brand-wrapper">
-                                                {brands.map((brand) => (
+                                                {brands?.map((brand) => (
                                                     <li key={brand.id}><button onClick={() => applyBrand(brand.slug)} aria-label="Filter Brand">{brand.name}</button></li>
                                                 ))}
                                             </ul>
@@ -447,14 +447,14 @@ return (
                                 <div className="category-links widget">
                                     <h4>Category</h4>
                                     <ul className="shop-category-list">
-                                        {categories.length && categories.map(cat => (
-                                            <li className={`${(cat.children_recursive.length > 0) ? 'has-children' : ''} ${((openToggle === cat.id)) ? 'active' : ''}`} key={cat.id}>
+                                        {categories?.length && categories?.map(cat => (
+                                            <li className={`${(cat.children_recursive?.length > 0) ? 'has-children' : ''} ${((openToggle === cat.id)) ? 'active' : ''}`} key={cat.id}>
                                                 <div className="list-text">
                                                     <Link href={`/product-category/${cat.slug}`} className={`${((category === cat.slug)) ? 'open' : ''} ${pathname == `/product-category/${cat?.slug}` && "active"}`} >
                                                         {cat.name}
                                                         {/* <span>{(cat.products_count > 0) ? `(${cat.products_count})` : ''}</span> */}
                                                     </Link>
-                                                    {cat.children_recursive.length > 0 ?
+                                                    {cat.children_recursive?.length > 0 ?
                                                         <button className={`drop-toggle ${openToggle === cat.id ? "active" : ""}`} onClick={() => toggleCat(cat.id, null, true, cat.children_recursive.map(c => c.id))} aria-label="Dropdown Toggle">
                                                             {openToggle === cat.id ? 
                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="12" height="12"><path d="M297.4 169.4C309.9 156.9 330.2 156.9 342.7 169.4L534.7 361.4C547.2 373.9 547.2 394.2 534.7 406.7C522.2 419.2 501.9 419.2 489.4 406.7L320 237.3L150.6 406.6C138.1 419.1 117.8 419.1 105.3 406.6C92.8 394.1 92.8 373.8 105.3 361.3L297.3 169.3z" fill="currentColor" /></svg> :
@@ -463,17 +463,17 @@ return (
                                                         </button> : ""
                                                     }
                                                 </div>
-                                                {cat.children_recursive && cat.children_recursive.length > 0 && (
+                                                {cat.children_recursive && cat.children_recursive?.length > 0 && (
                                                     <ul className="sub-list">
                                                         {cat.children_recursive.map((child) => (
                                                             (child.products_count > 0 &&
-                                                                <li className={`${(child.children_recursive.length > 0) ? 'has-children' : ''} ${((openToggle === child.id)) ? 'active' : ''}`} key={child.id}>
+                                                                <li className={`${(child.children_recursive?.length > 0) ? 'has-children' : ''} ${((openToggle === child.id)) ? 'active' : ''}`} key={child.id}>
                                                                     <div className="list-text">
                                                                         <Link href={`/product-category/${cat.slug}/${child.slug}`} className={`${((subCategory === child.slug)) ? 'open' : ''} ${pathname === `/product-category/${cat?.slug}/${child.slug}` ? "active" : ""}`}>
                                                                             {child.name}
                                                                             <span>{(child.products_count > 0) ? `(${child.products_count})` : ''}</span>
                                                                         </Link>
-                                                                        {child.children_recursive.length ?
+                                                                        {child.children_recursive?.length ?
                                                                             <button className={`drop-toggle ${openToggle === child.id ? "active" : ""}`} onClick={() => toggleCat(child.id, cat.id)}>
                                                                                 {openToggle === child.id ? 
                                                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="12" height="12"><path d="M297.4 169.4C309.9 156.9 330.2 156.9 342.7 169.4L534.7 361.4C547.2 373.9 547.2 394.2 534.7 406.7C522.2 419.2 501.9 419.2 489.4 406.7L320 237.3L150.6 406.6C138.1 419.1 117.8 419.1 105.3 406.6C92.8 394.1 92.8 373.8 105.3 361.3L297.3 169.3z" fill="currentColor" /></svg> :
@@ -482,17 +482,17 @@ return (
                                                                             </button> : ""
                                                                         }
                                                                     </div>
-                                                                    {child.children_recursive && child.children_recursive.length > 0 && (
+                                                                    {child.children_recursive && child.children_recursive?.length > 0 && (
                                                                         <ul className="sub-list">
                                                                             {child.children_recursive.map((value) => (
                                                                                 (value.products_count ?
-                                                                                    <li key={value.id} className={`${(value.children_recursive.length > 0) ? 'has-children' : ''} ${((openToggle === value.id)) ? 'active' : ''} `}>
+                                                                                    <li key={value.id} className={`${(value.children_recursive?.length > 0) ? 'has-children' : ''} ${((openToggle === value.id)) ? 'active' : ''} `}>
                                                                                         <div className="list-text">
                                                                                             <Link href={`/product-category/${cat.slug}/${child.slug}/${value.slug}`} className={`${(childrenCat === value.slug) ? 'open' : ''} ${pathname === `/product-category/${cat.slug}/${child.slug}/${value.slug}` && "active"}`}>
                                                                                                 {value.name}
                                                                                                 <span>{(value.products_count > 0) ? `(${value.products_count})` : ''}</span>
                                                                                             </Link>
-                                                                                            {value.children_recursive.length ?
+                                                                                            {value.children_recursive?.length ?
                                                                                                 <button className={`drop-toggle ${openToggle === value.id ? "active" : ""}`} onClick={() => toggleCat(value.id, child.id)}>
                                                                                                     {openToggle === value.id ? 
                                                                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="12" height="12"><path d="M297.4 169.4C309.9 156.9 330.2 156.9 342.7 169.4L534.7 361.4C547.2 373.9 547.2 394.2 534.7 406.7C522.2 419.2 501.9 419.2 489.4 406.7L320 237.3L150.6 406.6C138.1 419.1 117.8 419.1 105.3 406.6C92.8 394.1 92.8 373.8 105.3 361.3L297.3 169.3z" fill="currentColor" /></svg> :
@@ -501,7 +501,7 @@ return (
                                                                                                 </button> : ""
                                                                                             }
                                                                                         </div>
-                                                                                        {value.children_recursive && value.children_recursive.length > 0 && (
+                                                                                        {value.children_recursive && value.children_recursive?.length > 0 && (
                                                                                             <ul className="sub-list">
                                                                                                 {value.children_recursive.map((final) => (
                                                                                                     (final.products_count ?
@@ -535,7 +535,7 @@ return (
                                     </ul>
                                 </div>
 
-                                {(catPro.length < 1) ?
+                                {(catPro?.length < 1) ?
                                     <>
                                         <div className="widget">
                                             <h4>Price</h4>
@@ -588,11 +588,11 @@ return (
                                     </> : ''
                                 }
 
-                                {(recent && recent.length > 0) ?
+                                {(recent && recent?.length > 0) ?
                                     <div className="widget">
                                         <h4>Recently Viewed</h4>
                                         <ul className="brand-wrapper">
-                                            {recent.map((rec) => (
+                                            {recent?.map((rec) => (
                                                 <li key={rec?.id}><Link href={`/product/${rec?.slug}`}>{rec?.name}</Link></li>
                                             ))}
                                         </ul>
@@ -614,7 +614,7 @@ return (
                                             <option value="z_to_a">Name : Z To A</option>
                                         </select>
 
-                                        {(meta && catPro.length < 1) ?
+                                        {(meta && catPro?.length < 1) ?
                                             <span>Showing {(20 * (meta?.current_page - 1)) + 1}-{products?.length + (20 * (meta?.current_page - 1))} of {meta?.total} Results</span> : ''
                                         }
                                     </div>
@@ -668,7 +668,7 @@ return (
                                     </div>
                                 </div>
                             }
-                            {catPro.length == 0 && products.length > 0 &&
+                            {catPro?.length == 0 && products?.length > 0 &&
                                 (
                                     <div className="widget">
                                         <div className="alphabet-area">
@@ -713,10 +713,10 @@ return (
                                         </span>
                                     ))}
                                 </h4>
-                                {(catPro && catPro.length > 0 && !filterBrand) ?
+                                {(catPro && catPro?.length > 0 && !filterBrand) ?
                                     (
                                         <div className="row">
-                                            {catPro.map(cats => (
+                                            {catPro?.map(cats => (
                                                 (cats?.products_count > 0 &&
                                                     <div className="col-md-25" key={cats?.id}>
                                                         <Link href={`/product-category/${cats.slug}`} aria-label={cats?.name} className="category-item">
@@ -741,11 +741,11 @@ return (
                                             ))}
                                         </div>
                                     ) :
-                                    (products && products.length > 0) && (
+                                    (products && products?.length > 0) && (
                                         <>
 
                                             <div className="product-wrapper">
-                                                {products.map(pro => (
+                                                {products?.map(pro => (
                                                     <div className="product-list-content" key={pro?.id}>
                                                         <div className="row">
                                                             <div className="col-md-2">
@@ -757,7 +757,7 @@ return (
                                                                 <h2 className="product_title">
                                                                     <Link href={`/product/${pro?.slug}`}> {pro?.name}</Link>
                                                                 </h2>
-                                                                {pro?.brands.length > 0 &&
+                                                                {pro?.brands?.length > 0 &&
                                                                     <h2 className="brand_name">
                                                                         <Link href={`/brand/${pro?.brands[0].slug}`}>{pro?.brands[0].name}</Link>
                                                                     </h2>
@@ -765,11 +765,11 @@ return (
                                                             </div>
                                                             <div className="col-md-25 text-center">
                                                                 <Link href={`/product/${pro?.slug}`}>
-                                                                    {(pro?.variations.length > 1) ?
+                                                                    {(pro?.variations?.length > 1) ?
                                                                         <>
-                                                                            {(isLoggedIn && pro?.variations[0].price != pro?.variations[pro?.variations.length - 1].price) ?
+                                                                            {(isLoggedIn && pro?.variations[0].price != pro?.variations[pro?.variations?.length - 1].price) ?
                                                                                 <>
-                                                                                    {(pro?.variations[pro?.variations.length - 1].discounted_price > 0 && pro?.variations[pro?.variations.length - 1]?.stock > 0) ?
+                                                                                    {(pro?.variations[pro?.variations?.length - 1].discounted_price > 0 && pro?.variations[pro?.variations?.length - 1]?.stock > 0) ?
                                                                                         <>
                                                                                             <del>${pro?.variations.map(v => Number(v["sell_price"])).filter(price => price > 0).reduce((pre, next) => Math.min(pre, next), Infinity)} - ${pro?.variations.map(v => Number(v["price"])).filter(price => price > 0).reduce((pre, next) => Math.max(pre, next), -Infinity)}</del>
                                                                                             <p className="price">${pro?.variations.map(v => Number(v["discounted_price"])).filter(price => price > 0).reduce((pre, next) => Math.min(pre, next), Infinity)} - ${pro?.variations.map(v => Number(v["discounted_price"])).filter(price => price > 0).reduce((pre, next) => Math.max(pre, next), -Infinity)}</p>
@@ -780,7 +780,7 @@ return (
                                                                                 <>
                                                                                     <p>
                                                                                         <span className="price">
-                                                                                            {(pro?.variations[pro?.variations.length - 1].discounted_price > 0 && pro?.variations[pro?.variations.length - 1]?.stock > 0) ?
+                                                                                            {(pro?.variations[pro?.variations?.length - 1].discounted_price > 0 && pro?.variations[pro?.variations?.length - 1]?.stock > 0) ?
                                                                                                 `$${pro?.variations.map(v => Number(v["discounted_price"])).filter(price => price > 0).reduce((pre, next) => Math.min(pre, next), Infinity)} - $${pro?.variations.map(v => Number(v["discounted_price"])).filter(price => price > 0).reduce((pre, next) => Math.max(pre, next), -Infinity)}` : 'Inquiry Now'
                                                                                             }
                                                                                         </span>
@@ -888,7 +888,7 @@ return (
                                     )
 
                                 }
-                                {(products.length < 1 && catPro.length < 1) ?
+                                {(products?.length < 1 && catPro?.length < 1) ?
                                     <h2 className="empty"> No Products</h2> : ""
                                 }
                             </div>

@@ -16,20 +16,19 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import {
-  loadCaptchaEnginge,
-  LoadCanvasTemplateNoReload ,
-  validateCaptcha
+    loadCaptchaEnginge,
+    LoadCanvasTemplateNoReload,
+    validateCaptcha
 } from "react-simple-captcha";
 import { useUI } from '@/context/UiContext';
 
 
-export default function ProductClient({ initialData  }) {
+export default function ProductClient({ initialData }) {
     const navigate = useRouter();
     const { toggleCart } = useUI()
     const [token, setToken] = useState(null);
     const [popStatus, setPopStatus] = useState(false);
     const [captchaInput, setCaptchaInput] = useState("");
-
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const { toggleWishlist, getWishList, wishlistLoadingIds, fetchWishList, wishList } = useContext(WishListContext);
     const { startLoading, stopLoading } = useLoader();
@@ -62,7 +61,7 @@ export default function ProductClient({ initialData  }) {
     const [productTab, setProductTab] = useState(1);
 
     const { cartItems, addToCart, recentlyViewed } = useContext(CartContext)
-    
+
     const [ratingMes, setRatingMes] = useState("");
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
@@ -90,29 +89,44 @@ export default function ProductClient({ initialData  }) {
         let encoded = encodeURIComponent(slug);
         encoded = encoded.replace(/%2D/g, "-");
         return encoded.toLowerCase();
-    } 
+    }
 
     useEffect(() => {
         startLoading();
         const getDetails = async () => {
-                    await fetchWishList();
-                    
-                    recentlyViewed(initialData)
-                    if(initialData.variations){
-                        const minSell = initialData?.variations 
-                        .map(v => Number(v["sell_price"])) .filter(price => price > 0) 
-                        .reduce((pre, next) => Math.min(pre, next), Infinity); 
+            const res = await fetch(`${baseUrl}products/${normalizeSlug(slug)}`, {
+                method: 'GET',
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                    "Content-Type": "application/json",
+                },
+            });
+            if (!res.ok) {
+                throw new Error("Review Fetch Failed");
+            }
 
-                        const minDiscount = initialData?.variations 
-                        .map(v => Number(v["discounted_price"])) .filter(price => price > 0) 
-                        .reduce((pre, next) => Math.min(pre, next), Infinity); 
-                        setLowest([minSell, minDiscount])
-                    }
-                    setEncodedTitle(initialData.name)
-                    setEncodedUrl(`https://dawn-project.vercel.app/product/${initialData.name}`)
-                    setEncodedImage(initialData.image_url);
-                    stopLoading()
+            const result = await res.json();
+            if (result?.status) {
+                await fetchWishList();
+                setData(result?.data)
+                recentlyViewed(initialData)
+                if (initialData.variations) {
+                    const minSell = initialData?.variations
+                        .map(v => Number(v["sell_price"])).filter(price => price > 0)
+                        .reduce((pre, next) => Math.min(pre, next), Infinity);
+
+                    const minDiscount = initialData?.variations
+                        .map(v => Number(v["discounted_price"])).filter(price => price > 0)
+                        .reduce((pre, next) => Math.min(pre, next), Infinity);
+                    setLowest([minSell, minDiscount])
                 }
+                setEncodedTitle(initialData.name)
+                setEncodedUrl(`https://dawn-project.vercel.app/product/${initialData.name}`)
+                setEncodedImage(initialData.image_url);
+                stopLoading()
+            }
+
+        }
         getDetails();
     },
         [slug]);
@@ -163,11 +177,11 @@ export default function ProductClient({ initialData  }) {
             company: bcompany,
             location: blocation,
             message: bmessage,
-            quantity : Number(equantity),
-            "cf-turnstile-response" : null
+            quantity: Number(equantity),
+            "cf-turnstile-response": null
         };
 
-        if(validateCaptcha(captchaInput)){
+        if (validateCaptcha(captchaInput)) {
             setIsLoading(true);
             fetch(`${baseUrl}bulk-inquiry`, {
                 method: "POST",
@@ -191,14 +205,14 @@ export default function ProductClient({ initialData  }) {
                 setIsLoading(false);
                 loadCaptchaEnginge(6);
                 setCaptchaMessage("");
-                setCaptchaInput("");                       
+                setCaptchaInput("");
             }).catch((err) => {
                 setBulkmessage("Validation error: " + err.message);
             })
-        }else{
+        } else {
             setCaptchaMessage("captcha Wrong")
         }
-        
+
     }
     const checkWishlist = (id) => {
         return wishList.some(item => item.id === id);
@@ -282,10 +296,10 @@ export default function ProductClient({ initialData  }) {
                         const wrapper = document.querySelector(".enquiry-modal .form-wrapper");
                         wrapper.classList.add("animate-bounce");
                         wrapper.addEventListener("animationend", () => {
-                        wrapper.classList.remove("animate-bounce");
+                            wrapper.classList.remove("animate-bounce");
                         }, { once: true });
                     }
-                    }}
+                }}
             >
                 <div className={`form-wrapper widget ${isLoading ? "loading-wrapper" : ""}`}>
                     <div className="logo">
@@ -338,7 +352,7 @@ export default function ProductClient({ initialData  }) {
                             <div className="col-md-5">
                                 <div className="form-group">
                                     <label>Quantity</label>
-                                    <input type="number" min="1" placeholder="Quantity" value={equantity} onChange={(e) => setEquantity(e.target.value)}  required />
+                                    <input type="number" min="1" placeholder="Quantity" value={equantity} onChange={(e) => setEquantity(e.target.value)} required />
                                 </div>
                             </div>
                             <div className="col-md-5">
@@ -369,7 +383,7 @@ export default function ProductClient({ initialData  }) {
                                     </button>
                                 </div>
                             </div>
-                            
+
                         </div>
                         {bulkMessage && <p className="success">{bulkMessage}</p>}
                         <button className={`btn btn-primary w-100 mt-2 ${isLoading ? "loading" : ""}`} aria-label="Submit">{!isLoading ? "Submit" : ""}</button>
@@ -380,30 +394,30 @@ export default function ProductClient({ initialData  }) {
                     document.documentElement.style.overflow = "auto";
                 }} aria-label="Close Modal">&times;</button>
             </div>
-            
+
             <section className="single-main">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-10">
-                              <nav aria-label="breadcrumb" className="breadcrumb">
-                                    <ul className="flex items-center gap-2 text-sm">
-                                        <li>
-                                            <Link href="/">Home</Link>
-                                        </li>
-                                        <li>
-                                            <svg xmlns="http://www.w3.org/2000/svg" id="Bold" viewBox="0 0 24 24" width="18" height="18"><path d="M15.75,9.525,11.164,4.939A1.5,1.5,0,0,0,9.043,7.061l4.586,4.585a.5.5,0,0,1,0,.708L9.043,16.939a1.5,1.5,0,0,0,2.121,2.122l4.586-4.586A3.505,3.505,0,0,0,15.75,9.525Z"/></svg>
-                                        </li>
-                                        <li>
-                                            <Link href={`/product-category/${data?.categories?.[0]?.slug}`}>{data?.categories?.[0]?.name}</Link>
-                                        </li>
-                                        <li>
-                                            <svg xmlns="http://www.w3.org/2000/svg" id="Bold" viewBox="0 0 24 24" width="18" height="18"><path d="M15.75,9.525,11.164,4.939A1.5,1.5,0,0,0,9.043,7.061l4.586,4.585a.5.5,0,0,1,0,.708L9.043,16.939a1.5,1.5,0,0,0,2.121,2.122l4.586-4.586A3.505,3.505,0,0,0,15.75,9.525Z"/></svg>
-                                        </li>
-                                        <li>
-                                            <p>{data?.name}</p>
-                                        </li>
-                                    </ul>
-                                </nav>
+                            <nav aria-label="breadcrumb" className="breadcrumb">
+                                <ul className="flex items-center gap-2 text-sm">
+                                    <li>
+                                        <Link href="/">Home</Link>
+                                    </li>
+                                    <li>
+                                        <svg xmlns="http://www.w3.org/2000/svg" id="Bold" viewBox="0 0 24 24" width="18" height="18"><path d="M15.75,9.525,11.164,4.939A1.5,1.5,0,0,0,9.043,7.061l4.586,4.585a.5.5,0,0,1,0,.708L9.043,16.939a1.5,1.5,0,0,0,2.121,2.122l4.586-4.586A3.505,3.505,0,0,0,15.75,9.525Z" /></svg>
+                                    </li>
+                                    <li>
+                                        <Link href={`/product-category/${data?.categories?.[0]?.slug}`}>{data?.categories?.[0]?.name}</Link>
+                                    </li>
+                                    <li>
+                                        <svg xmlns="http://www.w3.org/2000/svg" id="Bold" viewBox="0 0 24 24" width="18" height="18"><path d="M15.75,9.525,11.164,4.939A1.5,1.5,0,0,0,9.043,7.061l4.586,4.585a.5.5,0,0,1,0,.708L9.043,16.939a1.5,1.5,0,0,0,2.121,2.122l4.586-4.586A3.505,3.505,0,0,0,15.75,9.525Z" /></svg>
+                                    </li>
+                                    <li>
+                                        <p>{data?.name}</p>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
                         <div className="col-md-3">
                             <div className="product-image-wrapper">
@@ -425,48 +439,48 @@ export default function ProductClient({ initialData  }) {
                                 <div className="title">
                                     <div className="title_p">
                                         <h1>{data?.name}</h1>
-                                            <div className="price">
-                                                {(data?.variations.length > 1) ?
-                                                    <>
-                                                        {isLoggedIn ?
-                                                            <>
-                                                                {(data?.variations?.map((p) =>Number(p?.discounted_price)).reduce((a, b) => Math.max(a, b), 0) > 0) ?
-                                                                    <>
-                                                                        <div>
-                                                                            <del>${lowest[0]} - ${data?.variations[data?.variations.length - 1].price}</del>
-                                                                        </div>
-                                                                        <div>
-                                                                            <span className="price">${lowest[1]} - ${data?.variations[data?.variations.length - 1].discounted_price}</span>
-                                                                        </div>
-                                                                    </> : ""
-                                                                }
-                                                                
+                                        <div className="price">
+                                            {(data?.variations.length > 1) ?
+                                                <>
+                                                    {isLoggedIn ?
+                                                        <>
+                                                            {(data?.variations?.map((p) => Number(p?.discounted_price)).reduce((a, b) => Math.max(a, b), 0) > 0) ?
+                                                                <>
+                                                                    <div>
+                                                                        <del>${lowest[0]} - ${data?.variations[data?.variations.length - 1].price}</del>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span className="price">${lowest[1]} - ${data?.variations[data?.variations.length - 1].discounted_price}</span>
+                                                                    </div>
+                                                                </> : ""
+                                                            }
 
-                                                            </> :
-                                                            <>
-                                                                {(data?.variations?.map((p) =>Number(p?.price)).reduce((a, b) => Math.max(a, b), 0) > 0) ?
-                                                                    <p>
-                                                                        <span className="price">${lowest[0]} - ${data?.variations[data?.variations.length - 1].price}</span>
-                                                                    </p> : ""
-                                                                }
-                                                            </>
-                                                        }
-                                                    </> :
-                                                    <>
-                                                        {(Number(data?.price)>0) ?
-                                                            (
-                                                                (isLoggedIn && data?.price != data?.discounted_price) ?
+
+                                                        </> :
+                                                        <>
+                                                            {(data?.variations?.map((p) => Number(p?.price)).reduce((a, b) => Math.max(a, b), 0) > 0) ?
+                                                                <p>
+                                                                    <span className="price">${lowest[0]} - ${data?.variations[data?.variations.length - 1].price}</span>
+                                                                </p> : ""
+                                                            }
+                                                        </>
+                                                    }
+                                                </> :
+                                                <>
+                                                    {(Number(data?.price) > 0) ?
+                                                        (
+                                                            (isLoggedIn && data?.price != data?.discounted_price) ?
                                                                 <>
                                                                     <del>${data?.price}</del>
                                                                     <span className="price">${data?.discounted_price}</span>
                                                                 </> :
                                                                 <span className="price">${data?.discounted_price}</span>
-                                                            ) : 
-                                                            ''
-                                                        }
-                                                    </>
-                                                }
-                                            </div>
+                                                        ) :
+                                                        ''
+                                                    }
+                                                </>
+                                            }
+                                        </div>
 
                                     </div>
 
@@ -517,7 +531,7 @@ export default function ProductClient({ initialData  }) {
                                                             checkWishlist(data?.id) ?
                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="18" height="18"><path d="M305 151.1L320 171.8L335 151.1C360 116.5 400.2 96 442.9 96C516.4 96 576 155.6 576 229.1L576 231.7C576 343.9 436.1 474.2 363.1 529.9C350.7 539.3 335.5 544 320 544C304.5 544 289.2 539.4 276.9 529.9C203.9 474.2 64 343.9 64 231.7L64 229.1C64 155.6 123.6 96 197.1 96C239.8 96 280 116.5 305 151.1z" fill="currentColor" /></svg> :
                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="18" height="18"><path d="M442.9 144C415.6 144 389.9 157.1 373.9 179.2L339.5 226.8C335 233 327.8 236.7 320.1 236.7C312.4 236.7 305.2 233 300.7 226.8L266.3 179.2C250.3 157.1 224.6 144 197.3 144C150.3 144 112.2 182.1 112.2 229.1C112.2 279 144.2 327.5 180.3 371.4C221.4 421.4 271.7 465.4 306.2 491.7C309.4 494.1 314.1 495.9 320.2 495.9C326.3 495.9 331 494.1 334.2 491.7C368.7 465.4 419 421.3 460.1 371.4C496.3 327.5 528.2 279 528.2 229.1C528.2 182.1 490.1 144 443.1 144zM335 151.1C360 116.5 400.2 96 442.9 96C516.4 96 576 155.6 576 229.1C576 297.7 533.1 358 496.9 401.9C452.8 455.5 399.6 502 363.1 529.8C350.8 539.2 335.6 543.9 320 543.9C304.4 543.9 289.2 539.2 276.9 529.8C240.4 502 187.2 455.5 143.1 402C106.9 358.1 64 297.7 64 229.1C64 155.6 123.6 96 197.1 96C239.8 96 280 116.5 305 151.1L320 171.8L335 151.1z" fill="currentColor" /></svg>
-                                                        ) }
+                                                        )}
                                                     </span>
                                                 </button>
                                             </> :
@@ -544,47 +558,47 @@ export default function ProductClient({ initialData  }) {
                                             </thead>
                                             <tbody>
                                                 {data.variations.map((variation) => (
-                                                        <tr key={variation.id}>
-                                                            <td>{variation.sku}</td>
-                                                            <td>{variation.size}</td>
-                                                            <td>
-                                                                <span className="price">
-                                                                    {variation?.sell_price > 0 ?
-                                                                        ((isLoggedIn && variation.sell_price!=variation.discounted_price) ?
+                                                    <tr key={variation.id}>
+                                                        <td>{variation.sku}</td>
+                                                        <td>{variation.size}</td>
+                                                        <td>
+                                                            <span className="price">
+                                                                {variation?.sell_price > 0 ?
+                                                                    ((isLoggedIn && variation.sell_price != variation.discounted_price) ?
+                                                                        <>
+                                                                            <del>${variation.sell_price}</del>&nbsp;
+                                                                            <span className="price">${variation.discounted_price}</span>
+                                                                        </> :
+                                                                        `$${variation.sell_price}`
+                                                                    ) :
+                                                                    '-'
+                                                                }
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            {((Number(variation?.price) > 0) && (Number(variation?.stock) > 0)) ?
+                                                                <Quantity quantity={quantity[variation.id] || 1} setQuantity={(val) => handleQuantityChange(variation.id, val)} /> :
+                                                                '-'
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            {(Number(variation?.price) > 0 && Number(variation?.stock) > 0) ?
+                                                                <>
+                                                                    <button className="btn btn-primary" onClick={() => handleAddToCart(null, quantity[variation?.id], variation.id)} aria-label="Add To Cart">{
+                                                                        loadingButton === variation?.id ?
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" className="loading" width="18" height="18"><path d="M272 112C272 85.5 293.5 64 320 64C346.5 64 368 85.5 368 112C368 138.5 346.5 160 320 160C293.5 160 272 138.5 272 112zM272 528C272 501.5 293.5 480 320 480C346.5 480 368 501.5 368 528C368 554.5 346.5 576 320 576C293.5 576 272 554.5 272 528zM112 272C138.5 272 160 293.5 160 320C160 346.5 138.5 368 112 368C85.5 368 64 346.5 64 320C64 293.5 85.5 272 112 272zM480 320C480 293.5 501.5 272 528 272C554.5 272 576 293.5 576 320C576 346.5 554.5 368 528 368C501.5 368 480 346.5 480 320zM139 433.1C157.8 414.3 188.1 414.3 206.9 433.1C225.7 451.9 225.7 482.2 206.9 501C188.1 519.8 157.8 519.8 139 501C120.2 482.2 120.2 451.9 139 433.1zM139 139C157.8 120.2 188.1 120.2 206.9 139C225.7 157.8 225.7 188.1 206.9 206.9C188.1 225.7 157.8 225.7 139 206.9C120.2 188.1 120.2 157.8 139 139zM501 433.1C519.8 451.9 519.8 482.2 501 501C482.2 519.8 451.9 519.8 433.1 501C414.3 482.2 414.3 451.9 433.1 433.1C451.9 414.3 482.2 414.3 501 433.1z" fill="currentColor" /></svg>
+                                                                            :
                                                                             <>
-                                                                                <del>${variation.sell_price}</del>&nbsp;
-                                                                                <span className="price">${variation.discounted_price}</span>
-                                                                            </> :
-                                                                            `$${variation.sell_price}`
-                                                                        ) :
-                                                                        '-'
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="16" height="16"><path d="M21.59,15H6.65l.13,1.12c.06,.5,.49,.88,.99,.88h12.22v2H7.78c-1.52,0-2.8-1.14-2.98-2.65L3.21,2.88c-.06-.5-.49-.88-.99-.88H0V0H2.22c1.52,0,2.8,1.14,2.98,2.65l.04,.35h4.76v2H5.48l.94,8h13.54l1.6-8h-5.55V3h7.99l-2.4,12Zm-14.59,5c-1.1,0-2,.9-2,2s.9,2,2,2,2-.9,2-2-.9-2-2-2Zm10,0c-1.1,0-2,.9-2,2s.9,2,2,2,2-.9,2-2-.9-2-2-2ZM8.89,7.72l2.69,2.69c.39,.39,.9,.58,1.41,.58s1.02-.19,1.41-.58l2.68-2.68-1.41-1.41-1.68,1.68V0h-2V8l-1.69-1.69-1.41,1.41Z" fill="currentColor" /></svg> Add To Cart
+                                                                            </>
                                                                     }
-                                                                </span>
-                                                            </td>
-                                                            <td>
-                                                                {((Number(variation?.price) > 0) && (Number(variation?.stock) > 0)) ?
-                                                                    <Quantity quantity={quantity[variation.id] || 1} setQuantity={(val) => handleQuantityChange(variation.id, val)} /> :
-                                                                    '-' 
-                                                                }
-                                                            </td>
-                                                            <td>
-                                                                {(Number(variation?.price) > 0 && Number(variation?.stock) > 0) ?
-                                                                    <>
-                                                                        <button className="btn btn-primary" onClick={() => handleAddToCart(null, quantity[variation?.id], variation.id)} aria-label="Add To Cart">{
-                                                                                loadingButton === variation?.id ?
-                                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" className="loading" width="18" height="18"><path d="M272 112C272 85.5 293.5 64 320 64C346.5 64 368 85.5 368 112C368 138.5 346.5 160 320 160C293.5 160 272 138.5 272 112zM272 528C272 501.5 293.5 480 320 480C346.5 480 368 501.5 368 528C368 554.5 346.5 576 320 576C293.5 576 272 554.5 272 528zM112 272C138.5 272 160 293.5 160 320C160 346.5 138.5 368 112 368C85.5 368 64 346.5 64 320C64 293.5 85.5 272 112 272zM480 320C480 293.5 501.5 272 528 272C554.5 272 576 293.5 576 320C576 346.5 554.5 368 528 368C501.5 368 480 346.5 480 320zM139 433.1C157.8 414.3 188.1 414.3 206.9 433.1C225.7 451.9 225.7 482.2 206.9 501C188.1 519.8 157.8 519.8 139 501C120.2 482.2 120.2 451.9 139 433.1zM139 139C157.8 120.2 188.1 120.2 206.9 139C225.7 157.8 225.7 188.1 206.9 206.9C188.1 225.7 157.8 225.7 139 206.9C120.2 188.1 120.2 157.8 139 139zM501 433.1C519.8 451.9 519.8 482.2 501 501C482.2 519.8 451.9 519.8 433.1 501C414.3 482.2 414.3 451.9 433.1 433.1C451.9 414.3 482.2 414.3 501 433.1z" fill="currentColor" /></svg>
-                                                                                    :
-                                                                                    <>
-                                                                                        <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="16" height="16"><path d="M21.59,15H6.65l.13,1.12c.06,.5,.49,.88,.99,.88h12.22v2H7.78c-1.52,0-2.8-1.14-2.98-2.65L3.21,2.88c-.06-.5-.49-.88-.99-.88H0V0H2.22c1.52,0,2.8,1.14,2.98,2.65l.04,.35h4.76v2H5.48l.94,8h13.54l1.6-8h-5.55V3h7.99l-2.4,12Zm-14.59,5c-1.1,0-2,.9-2,2s.9,2,2,2,2-.9,2-2-.9-2-2-2Zm10,0c-1.1,0-2,.9-2,2s.9,2,2,2,2-.9,2-2-.9-2-2-2ZM8.89,7.72l2.69,2.69c.39,.39,.9,.58,1.41,.58s1.02-.19,1.41-.58l2.68-2.68-1.41-1.41-1.68,1.68V0h-2V8l-1.69-1.69-1.41,1.41Z" fill="currentColor" /></svg> Add To Cart
-                                                                                    </>
-                                                                            }
-                                                                        </button>
-                                                                    </> :
-                                                                    <button className="btn btn-primary" onClick={() => setPopStatus(true)} aria-label="Inquiry">Inquiry Now</button>
-                                                                }
+                                                                    </button>
+                                                                </> :
+                                                                <button className="btn btn-primary" onClick={() => setPopStatus(true)} aria-label="Inquiry">Inquiry Now</button>
+                                                            }
 
-                                                            </td>
-                                                        </tr>
+                                                        </td>
+                                                    </tr>
                                                 ))}
                                             </tbody>
                                         </table>
@@ -615,7 +629,7 @@ export default function ProductClient({ initialData  }) {
                                     </div>
                                     <div className="shop-single-sortinfo">
                                         <ul>
-                                            <li>Category: 
+                                            <li>Category:
                                                 {data?.categories.map((cat, index) => (
                                                     <Link href={`/product-category/${cat?.slug}`} key={cat.id}>{cat.name}{(data.categories.length > index + 1) ? ' , ' : ''}</Link>
                                                 ))}
@@ -708,7 +722,7 @@ export default function ProductClient({ initialData  }) {
                                                                                 <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="16" height="16">
                                                                                     <path d="M24.062,9.033H14.849L12,.156l-2.849,8.877H-.062l7.46,5.453-2.864,8.863,7.467-5.488,7.467,5.488-2.864-8.863,7.46-5.453Zm-6.5,11.676l-5.562-4.089-5.562,4.089,2.134-6.604L3,10.033h6.881l2.119-6.605,2.12,6.605h6.88l-5.571,4.072,2.134,6.604Z" fill="currentColor" />
                                                                                 </svg>
-                                                                            </span>                                                                        
+                                                                            </span>
                                                                         </button>
                                                                     );
                                                                 })}
@@ -780,7 +794,7 @@ export default function ProductClient({ initialData  }) {
                     </div>
                 </div>
             </section>
- 
+
             <section className="related">
                 <div className="container">
                     <div className="title">
@@ -823,11 +837,11 @@ export default function ProductClient({ initialData  }) {
                                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" className="loading" width="18" height="18"><path d="M272 112C272 85.5 293.5 64 320 64C346.5 64 368 85.5 368 112C368 138.5 346.5 160 320 160C293.5 160 272 138.5 272 112zM272 528C272 501.5 293.5 480 320 480C346.5 480 368 501.5 368 528C368 554.5 346.5 576 320 576C293.5 576 272 554.5 272 528zM112 272C138.5 272 160 293.5 160 320C160 346.5 138.5 368 112 368C85.5 368 64 346.5 64 320C64 293.5 85.5 272 112 272zM480 320C480 293.5 501.5 272 528 272C554.5 272 576 293.5 576 320C576 346.5 554.5 368 528 368C501.5 368 480 346.5 480 320zM139 433.1C157.8 414.3 188.1 414.3 206.9 433.1C225.7 451.9 225.7 482.2 206.9 501C188.1 519.8 157.8 519.8 139 501C120.2 482.2 120.2 451.9 139 433.1zM139 139C157.8 120.2 188.1 120.2 206.9 139C225.7 157.8 225.7 188.1 206.9 206.9C188.1 225.7 157.8 225.7 139 206.9C120.2 188.1 120.2 157.8 139 139zM501 433.1C519.8 451.9 519.8 482.2 501 501C482.2 519.8 451.9 519.8 433.1 501C414.3 482.2 414.3 451.9 433.1 433.1C451.9 414.3 482.2 414.3 501 433.1z" fill="currentColor" /></svg>
                                                                 ) : (
                                                                     checkWishlist(pro?.id) ?
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="18" height="18"><path d="M305 151.1L320 171.8L335 151.1C360 116.5 400.2 96 442.9 96C516.4 96 576 155.6 576 229.1L576 231.7C576 343.9 436.1 474.2 363.1 529.9C350.7 539.3 335.5 544 320 544C304.5 544 289.2 539.4 276.9 529.9C203.9 474.2 64 343.9 64 231.7L64 229.1C64 155.6 123.6 96 197.1 96C239.8 96 280 116.5 305 151.1z" fill="currentColor" /></svg> :
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="18" height="18"><path d="M442.9 144C415.6 144 389.9 157.1 373.9 179.2L339.5 226.8C335 233 327.8 236.7 320.1 236.7C312.4 236.7 305.2 233 300.7 226.8L266.3 179.2C250.3 157.1 224.6 144 197.3 144C150.3 144 112.2 182.1 112.2 229.1C112.2 279 144.2 327.5 180.3 371.4C221.4 421.4 271.7 465.4 306.2 491.7C309.4 494.1 314.1 495.9 320.2 495.9C326.3 495.9 331 494.1 334.2 491.7C368.7 465.4 419 421.3 460.1 371.4C496.3 327.5 528.2 279 528.2 229.1C528.2 182.1 490.1 144 443.1 144zM335 151.1C360 116.5 400.2 96 442.9 96C516.4 96 576 155.6 576 229.1C576 297.7 533.1 358 496.9 401.9C452.8 455.5 399.6 502 363.1 529.8C350.8 539.2 335.6 543.9 320 543.9C304.4 543.9 289.2 539.2 276.9 529.8C240.4 502 187.2 455.5 143.1 402C106.9 358.1 64 297.7 64 229.1C64 155.6 123.6 96 197.1 96C239.8 96 280 116.5 305 151.1L320 171.8L335 151.1z" fill="currentColor" /></svg>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="18" height="18"><path d="M305 151.1L320 171.8L335 151.1C360 116.5 400.2 96 442.9 96C516.4 96 576 155.6 576 229.1L576 231.7C576 343.9 436.1 474.2 363.1 529.9C350.7 539.3 335.5 544 320 544C304.5 544 289.2 539.4 276.9 529.9C203.9 474.2 64 343.9 64 231.7L64 229.1C64 155.6 123.6 96 197.1 96C239.8 96 280 116.5 305 151.1z" fill="currentColor" /></svg> :
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="18" height="18"><path d="M442.9 144C415.6 144 389.9 157.1 373.9 179.2L339.5 226.8C335 233 327.8 236.7 320.1 236.7C312.4 236.7 305.2 233 300.7 226.8L266.3 179.2C250.3 157.1 224.6 144 197.3 144C150.3 144 112.2 182.1 112.2 229.1C112.2 279 144.2 327.5 180.3 371.4C221.4 421.4 271.7 465.4 306.2 491.7C309.4 494.1 314.1 495.9 320.2 495.9C326.3 495.9 331 494.1 334.2 491.7C368.7 465.4 419 421.3 460.1 371.4C496.3 327.5 528.2 279 528.2 229.1C528.2 182.1 490.1 144 443.1 144zM335 151.1C360 116.5 400.2 96 442.9 96C516.4 96 576 155.6 576 229.1C576 297.7 533.1 358 496.9 401.9C452.8 455.5 399.6 502 363.1 529.8C350.8 539.2 335.6 543.9 320 543.9C304.4 543.9 289.2 539.2 276.9 529.8C240.4 502 187.2 455.5 143.1 402C106.9 358.1 64 297.7 64 229.1C64 155.6 123.6 96 197.1 96C239.8 96 280 116.5 305 151.1L320 171.8L335 151.1z" fill="currentColor" /></svg>
                                                                 )}
                                                             </span>
-                                                            
+
                                                         </button>
                                                     </div>
                                                 </div>

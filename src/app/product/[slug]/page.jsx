@@ -2,20 +2,18 @@ import ProductClient from "./ProductClient";
 
 
 async function getProduct(slug) {
-    const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const res = await fetch(`${BASE_URL}products/${slug}`, {
-                    method: 'GET',
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
+    method: 'GET',
+    headers: { "Content-Type": "application/json" },
+  });
 
   const result = await res.json();
   return result.data;
 }
 
 export async function generateMetadata({ params }) {
-    const {slug} = await params;
+  const { slug } = await params;
   const product = await getProduct(slug);
   const title =
     product.meta_title ||
@@ -57,36 +55,36 @@ export async function generateMetadata({ params }) {
     },
   };
 }
-export default async function Page({params}){
-    const {slug} = await params;
+export default async function Page({ params }) {
+  const { slug } = await params;
 
-    const product = await getProduct(slug);
-    const schema = {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      name: product.name,
-      image: product.image_url,
-      description: product.short_description,
-      sku: product.sku,
-      brand: {
-        "@type": "Brand",
-        name: product.brands[0].name,
-      },
-      offers: {
-        "@type": "Offer",
-        url: `https://dawnscientific.com/product/${product.slug}`,
-        priceCurrency: "USD",
-        price: product.discounted_price,
-        availability: "https://schema.org/InStock",
-      },
-    };
-    return <>
-              <script
-                  type="application/ld+json"
-                  dangerouslySetInnerHTML={{
-                    __html: JSON.stringify(schema),
-                  }}
-                />
-              <ProductClient initialData={product} />
-            </>
+  const product = await getProduct(slug);
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    image: product.image_url,
+    description: product.short_description,
+    sku: product.sku,
+    brand: {
+      "@type": "Brand",
+      name: product.brands[0].name,
+    },
+    offers: {
+      "@type": "Offer",
+      url: `https://dawnscientific.com/product/${product.slug}`,
+      priceCurrency: "USD",
+      price: product.discounted_price,
+      availability: "https://schema.org/InStock",
+    },
+  };
+  return <>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(schema),
+      }}
+    />
+    <ProductClient initialData={product} slug={slug} />
+  </>
 }
