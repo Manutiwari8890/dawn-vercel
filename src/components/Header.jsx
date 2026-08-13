@@ -93,7 +93,8 @@ function Header(){
             })
             .then(({ data }) => {
                 if(!data?.isLogin){
-                    localStorage.clear()
+                    localStorage.removeItem('token')
+                    localStorage.removeItem('user')
                 }
                 const formattedMenus = data?.header?.map((menu) => {
                     const mergedChildren = menu.children_recursive_front.flatMap((f) => {
