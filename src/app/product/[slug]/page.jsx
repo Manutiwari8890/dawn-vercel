@@ -9,6 +9,8 @@ async function getProduct(slug) {
   });
 
   const result = await res.json();
+  console.log(result)
+
   return result.data;
 }
 

@@ -94,7 +94,7 @@ export default function ProductClient({ initialData }) {
     useEffect(() => {
         startLoading();
         const getDetails = async () => {
-            const res = await fetch(`${baseUrl}products/${normalizeSlug(slug)}`, {
+            const res = await fetch(`${baseUrl}products/${slug}`, {
                 method: 'GET',
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`,
