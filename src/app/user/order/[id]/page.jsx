@@ -10,7 +10,7 @@ import AccountSidebar from '@/components/AccountSidebar';
 
 export default function Page()
 {
-    const baseUrl = import.meta.env.VITE_API_BASE_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const { user, logout, isLoggedIn } = useContext(AuthContext);
     const token = user?.access_token;
     const { startLoading, stopLoading } = useLoader();
@@ -299,7 +299,7 @@ export default function Page()
                                                     <th>status</th>
                                                     <td>
                                                         {orderDetails.status == 'pending' || orderDetails.status == 'processing' ?
-                                                            <span className="badge badge-info">{orderDetails.status}</span> : (orderDetails.status == 'success') ?
+                                                            <span className="badge badge-info">{orderDetails.status}</span> : (orderDetails.status == 'completed') ?
                                                                 <span className="badge badge-success">Completed</span> : (orderDetails.status == 'cancelled') ?
                                                                     <span className="badge badge-dange">Canclled</span> : (orderDetails.status == 'draft') ?
                                                                     <span className="badge badge-warning">Draft</span> : ''
