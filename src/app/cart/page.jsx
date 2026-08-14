@@ -97,7 +97,7 @@ export default function Page() {
             redirect: "follow"
         };
 
-        if (Object.keys(errors).length === 0) {
+        if (Object.keys(errors)?.length === 0) {
             login(requestOptions, false).then((mess) => {
                 if (mess) {
                     setMessage(mess)
@@ -223,7 +223,7 @@ export default function Page() {
 
             <section className="cart-main">
                 <div className="container">
-                    {cartItems.length > 0 ?
+                    {cartItems?.length > 0 ?
                         <div className="row">
                             <div className="col-md-7">
                                 <div>
