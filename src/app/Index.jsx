@@ -657,7 +657,7 @@ export default function Index() {
                                             <p>Studies & uses instruments and methods to separate, identify, and quantify matter</p>
                                         </div>
                                     </div>
-                                    <Link href="/analytical-lab" className="btn btn-primary" aria-label="Analytical Chemistry">Read More</Link>
+                                    <Link href="/analytical-lab" className="btn btn-primary" aria-label="Analytical Chemistry" title='Analytical Chemistry'><span aria-hidden="true">Read More</span></Link>
                                 </div>
                             </SwiperSlide>
                             <SwiperSlide>
@@ -673,7 +673,7 @@ export default function Index() {
                                             <p>Study of all the chemical species present in the soil, water, and air environments</p>
                                         </div>
                                     </div>
-                                    <Link href="/environmental-chemistry" className="btn btn-primary" aria-label="Environmental Chemistry">Read More</Link>
+                                    <Link href="/environmental-chemistry" className="btn btn-primary" aria-label="Environmental Chemistry" title="Environmental Chemistry"><span aria-hidden="true">Read More</span></Link>
                                 </div>
                             </SwiperSlide>
                             <SwiperSlide>
@@ -689,7 +689,7 @@ export default function Index() {
                                             <p>Study of identification of microorganisms including bacteria, fungi, yeasts</p>
                                         </div>
                                     </div>
-                                    <Link href="/microbiology-lab" className="btn btn-primary" aria-label="Microbiology Lab">Read More</Link>
+                                    <Link href="/microbiology-lab" className="btn btn-primary" aria-label="Microbiology Lab" title="Microbiology Lab"><span aria-hidden="true">Read More</span></Link>
                                 </div>
                             </SwiperSlide>
                             <SwiperSlide>
@@ -705,7 +705,7 @@ export default function Index() {
                                             <p>Use chemicals, such as carbon dioxide or ethanol, to separate CBD from the plant</p>
                                         </div>
                                     </div>
-                                    <Link href="/cannabis-oil-extraction" className="btn btn-primary" aria-label="Cannabis oil extraction">Read More</Link>
+                                    <Link href="/cannabis-oil-extraction" className="btn btn-primary" aria-label="Cannabis oil extraction" title="Cannabis oil extraction"><span aria-hidden="true">Read More</span></Link>
                                 </div>
                             </SwiperSlide>
                             <SwiperSlide>
@@ -721,7 +721,7 @@ export default function Index() {
                                             <p>Chemical substances can play an important role in food production & preservation</p>
                                         </div>
                                     </div>
-                                    <Link href="/food-beverage-testing" className="btn btn-primary" aria-label="Food & Beverage Testing">Read More</Link>
+                                    <Link href="/food-beverage-testing" className="btn btn-primary" aria-label="Food & Beverage Testing" title="Food & Beverage Testing"><span aria-hidden="true">Read More</span></Link>
                                 </div>
                             </SwiperSlide>
                             <SwiperSlide>
@@ -737,7 +737,7 @@ export default function Index() {
                                             <p>Used to make essential oils, botanical preparations, and botanical drugs</p>
                                         </div>
                                     </div>
-                                    <Link href="/botanical" className="btn btn-primary" aria-label="Botanical">Read More</Link>
+                                    <Link href="/botanical" className="btn btn-primary" aria-label="Botanical" title="Botanical"><span aria-hidden="true">Read More</span></Link>
                                 </div>
                             </SwiperSlide>
                             <SwiperSlide>
@@ -753,7 +753,7 @@ export default function Index() {
                                             <p>High-purity reagents, solvents, and consumables engineered for precise research and development workflows.</p>
                                         </div>
                                     </div>
-                                    <Link href="/rd-laboratory" className="btn btn-primary" aria-label="R & D laboratory">Read More</Link>
+                                    <Link href="/rd-laboratory" className="btn btn-primary" aria-label="R & D laboratory" title="R & D laboratory"><span aria-hidden="true">Read More</span></Link>
                                 </div>
                             </SwiperSlide>
 
@@ -770,7 +770,7 @@ export default function Index() {
                                             <p>Petrochemicals are the chemical products obtained from petroleum by refining</p>
                                         </div>
                                     </div>
-                                    <Link href="/petroleum" className="btn btn-primary" aria-label="Petroleum">Read More</Link>
+                                    <Link href="/petroleum" className="btn btn-primary" aria-label="Petroleum" title="Petroleum"><span aria-hidden="true">Read More</span></Link>
                                 </div>
                             </SwiperSlide>
                             <SwiperSlide>
@@ -786,7 +786,7 @@ export default function Index() {
                                             <p>Curriculum-ready lab supplies and science kits that simplify hands-on learning for schools and colleges.</p>
                                         </div>
                                     </div>
-                                    <Link href="/educational" className="btn btn-primary" aria-label="Educational">Read More</Link>
+                                    <Link href="/educational" className="btn btn-primary" aria-label="Educational" title="Educational"><span aria-hidden="true">Read More</span></Link>
                                 </div>
                             </SwiperSlide>
                             <SwiperSlide>
@@ -802,7 +802,7 @@ export default function Index() {
                                             <p>Advanced biotech reagents and lab essentials designed to support reliable research and innovation.</p>
                                         </div>
                                     </div>
-                                    <Link href="/biotechnology" className="btn btn-primary" aria-label="Biotechnology">Read More</Link>
+                                    <Link href="/biotechnology" className="btn btn-primary" aria-label="Biotechnology" title="Biotechnology"><span aria-hidden="true">Read More</span></Link>
                                 </div>
                             </SwiperSlide>
                             <SwiperSlide>
@@ -818,7 +818,7 @@ export default function Index() {
                                             <p>Pharmaceutical chemists development of modified peptides and proteins</p>
                                         </div>
                                     </div>
-                                    <Link href="/pharmaceutical" className="btn btn-primary" aria-label="Pharmaceutical">Read More</Link>
+                                    <Link href="/pharmaceutical" className="btn btn-primary" aria-label="Pharmaceutical" title="Pharmaceutical"><span aria-hidden="true">Read More</span></Link>
                                 </div>
                             </SwiperSlide>
                             <SwiperSlide>
@@ -834,7 +834,7 @@ export default function Index() {
                                             <p>Empowering Science Education with Reliable Lab Supplies & Kits for Chemistry, Biology, and Physics.</p>
                                         </div>
                                     </div>
-                                    <Link href="/product-category/consumables-supplies/chemistry/" className="btn btn-primary" aria-label="School & Colleges">Read More</Link>
+                                    <Link href="/product-category/consumables-supplies/chemistry/" className="btn btn-primary" aria-label="School & Colleges" title="School & Colleges"> <span aria-hidden="true">Read More</span></Link>
                                 </div>
                             </SwiperSlide>
                         </Swiper>
@@ -859,7 +859,7 @@ export default function Index() {
                                         </div>
                                         <div className="btn-area">
                                             <Link href={`/blog/detail/${blog?.slug}`} title={blog?.title} aria-label={`${blog?.title}`} className="btn btn-secondary w-100">
-                                                Read More 
+                                                <span aria-hidden="true">Read More</span> 
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="20" height="20"><path d="M566.6 342.6C579.1 330.1 579.1 309.8 566.6 297.3L406.6 137.3C394.1 124.8 373.8 124.8 361.3 137.3C348.8 149.8 348.8 170.1 361.3 182.6L466.7 288L96 288C78.3 288 64 302.3 64 320C64 337.7 78.3 352 96 352L466.7 352L361.3 457.4C348.8 469.9 348.8 490.2 361.3 502.7C373.8 515.2 394.1 515.2 406.6 502.7L566.6 342.7z" fill="currentColor"></path></svg>
                                             </Link>
                                         </div>
