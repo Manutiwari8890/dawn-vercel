@@ -78,6 +78,51 @@ export default async function Page({ params }) {
       priceCurrency: "USD",
       price: product.discounted_price,
       availability: "https://schema.org/InStock",
+      shippingDetails: {
+        "@type": "OfferShippingDetails",
+
+        shippingRate: {
+          "@type": "MonetaryAmount",
+          value: "0",
+          currency: "USD",
+        },
+
+        shippingDestination: {
+          "@type": "DefinedRegion",
+          addressCountry: "US",
+        },
+
+        deliveryTime: {
+          "@type": "ShippingDeliveryTime",
+
+          handlingTime: {
+            "@type": "QuantitativeValue",
+            minValue: 1,
+            maxValue: 2,
+            unitCode: "DAY",
+          },
+
+          transitTime: {
+            "@type": "QuantitativeValue",
+            minValue: 2,
+            maxValue: 5,
+            unitCode: "DAY",
+          },
+        },
+      },
+
+      hasMerchantReturnPolicy: {
+        "@type": "MerchantReturnPolicy",
+        applicableCountry: "US",
+        returnPolicyCategory:
+          "https://schema.org/MerchantReturnFiniteReturnWindow",
+
+        merchantReturnDays: 30,
+
+        returnMethod: "https://schema.org/ReturnByMail",
+
+        returnFees: "https://schema.org/FreeReturn",
+      },
     },
   },
   {
