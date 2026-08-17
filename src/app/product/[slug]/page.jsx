@@ -61,12 +61,12 @@ export default async function Page({ params }) {
   const { slug } = await params;
 
   const product = await getProduct(slug);
-  const schema = {
+  const schema = [{
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
     image: product.image_url,
-    description: product.short_description,
+    description: product.meta_description,
     sku: product.sku,
     brand: {
       "@type": "Brand",
@@ -79,7 +79,32 @@ export default async function Page({ params }) {
       price: product.discounted_price,
       availability: "https://schema.org/InStock",
     },
-  };
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://dawnscientific.com/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Products",
+        item: `https://dawnscientific.com/product-category${product?.categories?.[0]?.name}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: product.name,
+        item: `https://dawnscientific.com/product/${product.slug}`,
+      },
+    ],
+  },
+];
   return <>
     <script
       type="application/ld+json"

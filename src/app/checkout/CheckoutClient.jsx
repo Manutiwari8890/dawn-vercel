@@ -22,7 +22,6 @@ export default function CheckoutClient(){
     const [isLoading, setIsLoading] = useState(false);
     const { cartItems, addToCart, removeFromCart, cartDetail, clearCart, getCartTotal, fetchCartFromApi, updateCartItemQuantity } = useContext(CartContext)
     const { user, logout, isLoggedIn, login } = useContext(AuthContext);
-
     const [checkoutData, setCheckoutData] = useState({});
     const [shipAdds, setShipAdds] = useState("");
     const { startLoading, stopLoading } = useLoader();
