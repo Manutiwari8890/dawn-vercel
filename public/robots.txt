@@ -1,0 +1,17 @@
+# Allow all crawlers
+User-agent: *
+Disallow: /admin/
+Disallow: /login/
+Disallow: /private/
+Disallow: /cart
+Disallow: /checkout
+Disallow: /account
+Disallow: /user
+
+# Crawl delay (optional, in seconds)
+Crawl-delay: 10
+Sitemap: https://dawnscientific.com/sitemap.xml
+Sitemap: https://dawnscientific.com/dawnscientific-sitemap_20k.xml
+Sitemap: https://dawnscientific.com/dawnscientific-sitemap_30k.xml
+Sitemap: https://dawnscientific.com/dawnscientific-sitemap-brand.xml
+Sitemap: https://dawnscientific.com/dawnscientific-sitemap-products40k.xml

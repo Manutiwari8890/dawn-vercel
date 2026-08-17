@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <sitemap>
+    <loc>https://dawnscientific.com/dawnscientific-sitemap_20k.xml</loc>
+  </sitemap>
+
+  <sitemap>
+    <loc>https://dawnscientific.com/dawnscientific-sitemap_30k.xml</loc>
+  </sitemap>
+
+  <sitemap>
+    <loc>https://dawnscientific.com/dawnscientific-sitemap-brand.xml</loc>
+  </sitemap>
+
+  <sitemap>
+    <loc>https://dawnscientific.com/dawnscientific-sitemap-products40k.xml</loc>
+  </sitemap>
+
+</sitemapindex>
