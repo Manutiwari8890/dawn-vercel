@@ -424,10 +424,10 @@ export default function ProductClient({ initialData }) {
                                 <div className="product-image-slider">
                                     {data?.image_url ?
                                         <ZoomImage
-                                            src={bigImg || data?.image_url}
+                                            src={bigImg || data?.image_url} name={data?.name}
                                         /> :
                                         <ZoomImage
-                                            src={bigImg || data?.brands[0].image_url}
+                                            src={bigImg || data?.brands[0].image_url} name={data?.name}
                                         />
                                     }
                                 </div>

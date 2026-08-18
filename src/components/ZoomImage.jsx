@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 
-const ZoomImage = ({ src, zoomLevel = 1, width = 100, height = 100 }) => {
+const ZoomImage = ({ src, zoomLevel = 1, width = 100, height = 100, name }) => {
   const containerRef = useRef(null);
   const [bgPos, setBgPos] = useState('50% 50%');
   const [zoom, setZoom] = useState(zoomLevel);
@@ -29,7 +29,7 @@ const ZoomImage = ({ src, zoomLevel = 1, width = 100, height = 100 }) => {
           setOverlayImg(false)
           document.documentElement.style.overflow = "auto";
         }} aria-label="Modal Close">&times;</button>
-        <img src={src} alt="Product" onClick={(e) => {e.stopPropagation(); }} />
+        <img src={src} alt={name} onClick={(e) => {e.stopPropagation(); }} />
       </div>
       <div
         ref={containerRef}
@@ -49,7 +49,7 @@ const ZoomImage = ({ src, zoomLevel = 1, width = 100, height = 100 }) => {
         }}
       >
         {/* keep the img for accessibility, but hide it */}
-        <img src={src} alt="Product" />
+        <img src={src} alt={name} />
       </div>
     </div>
   );

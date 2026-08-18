@@ -58,7 +58,7 @@ export default function SingleBlogClient({initData}) {
                             </p>
                             <div className="text-center">
                                 <div className="blog_thumbnail">
-                                    <img src={detail?.image_url} alt="" />
+                                    <img src={detail?.image_url} alt={detail?.title} width={560} heght={560} />
                                 </div>
                             </div>
                             <div className="desc">

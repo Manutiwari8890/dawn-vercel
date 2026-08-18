@@ -852,7 +852,9 @@ export default function Index() {
                                 <div className="col-md-2" key={blog?.id}>
                                     <div className="article">
                                         <div className="img-container">
-                                            <img src={blog?.image_url} alt={blog?.title} width="186" height="186" loading="lazy" />
+                                            <div className="skeletone">
+                                                <img src={blog?.image_url} alt={blog?.title} width="186" height="186" loading="lazy" />
+                                            </div>
                                         </div>
                                         <div className="title">
                                             <h3>{blog?.title}</h3>
