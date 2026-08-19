@@ -159,7 +159,7 @@ header .top-head { position: relative; z-index: 99; background-color: transparen
 .top-head h6 a { font-size: 14px; font-weight: 500; margin-right: 10px; }
 .top-head h6 a svg {width:14px; height:14px; color: var(--yellow-color); margin-right: 5px; margin-bottom:-2px}
 .top-head h6 a:hover { color: var(--yellow-color); }
-nav ul:not(.sub-menu, .flex-wrap) { display: flex; min-width: 300px; gap: 7px; list-style: none; align-items: center;}
+nav ul:not(.sub-menu, .flex-wrap) { display: flex; gap: 7px; list-style: none; align-items: center;}
 .main-head .navbar-menu { display: flex; gap: 10px; list-style: none; align-items: center; justify-content: center;}
 nav .nav-right-link.has-children.my_account ul{display: block;}
 .top-head ul li, .main-head ul li { position: relative; }
