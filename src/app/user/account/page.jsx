@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { AuthContext } from '@/context/AuthContext';
 import { useLoader } from '@/context/LoaderContext';
 import AccountSidebar from '@/components/AccountSidebar';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
 export default function Page() {
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -61,7 +62,7 @@ export default function Page() {
 
 
     return (
-        <>
+        <ProtectedRoute>
             <section className="page-title">
                 <div className="container">
                     <div className="title-wrapper">
@@ -171,6 +172,6 @@ export default function Page() {
                     </div>
                 </div>
             </section>
-        </>
+        </ProtectedRoute>
     )
 }

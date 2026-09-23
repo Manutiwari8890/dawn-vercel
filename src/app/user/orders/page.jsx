@@ -4,6 +4,7 @@ import Link from 'next/link';
 import AccountSidebar from '@/components/AccountSidebar';
 import { useLoader } from '@/context/LoaderContext';
 import { AuthContext } from '@/context/AuthContext';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
 export default function Page()
 {
@@ -37,7 +38,7 @@ export default function Page()
         []);    
 
     return (
-        <>
+        <ProtectedRoute>
             <section className="page-title">
                 <div className="container">
                     <div className="title-wrapper">
@@ -113,6 +114,6 @@ export default function Page()
                     </div>
                 </div>
             </section>
-        </>
+        </ProtectedRoute>
     )
 }

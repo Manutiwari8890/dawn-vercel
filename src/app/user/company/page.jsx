@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { AuthContext } from '@/context/AuthContext';
 import { useLoader } from '@/context/LoaderContext';
 import AccountSidebar from '@/components/AccountSidebar';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
 export default function Page()
 {
@@ -328,7 +329,7 @@ export default function Page()
     }
 
     return (
-        <>
+        <ProtectedRoute>
             <div className={`address-modal modal ${popStatus ? "active" : ""}`} id="demo-modal"
                 onClick={(e) => {
                     if (e.target.classList.contains("address-modal")) {
@@ -603,6 +604,6 @@ export default function Page()
                     </div>
                 </div>
             </section>
-        </>
+        </ProtectedRoute>
     )
 }

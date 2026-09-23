@@ -8,7 +8,7 @@ import { AuthContext } from '@/context/AuthContext';
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import Select from 'react-select'
 import { useLoader } from '@/context/LoaderContext';
-
+import ProtectedRoute from '@/components/ProtectedRoute';
 
 
 export default function CheckoutClient(){
@@ -253,12 +253,14 @@ export default function CheckoutClient(){
                 }
                 return item;
             }, {})
-            const addTariff = updated?.add?.reduce((acc, item) => acc + Number(item?.discounted_price), 0) || 0
-            const subtractTariff = updated?.subtract?.reduce((acc, item) => acc + Number(item?.discounted_price), 0) || 0
-            data.tariff = ((addTariff * data?.tariff_charge) / 100).toFixed(2)
-            
-            data.total = (Number(data?.total?.replace(/,/g, "")) - (((subtractTariff * data?.tariff_charge) / 100))).toFixed(2)
-            setCheckoutData(data);
+            if(data){
+                const addTariff = updated?.add?.reduce((acc, item) => acc + Number(item?.discounted_price), 0) || 0
+                const subtractTariff = updated?.subtract?.reduce((acc, item) => acc + Number(item?.discounted_price), 0) || 0
+                data.tariff = ((addTariff * data?.tariff_charge) / 100).toFixed(2)
+                
+                data.total = (Number(data?.total?.replace(/,/g, "")) - (((subtractTariff * data?.tariff_charge) / 100))).toFixed(2)
+                setCheckoutData(data);
+            }
             stopLoading();
         }
         if(!orderId){
@@ -626,7 +628,7 @@ export default function CheckoutClient(){
     }
 
     return (
-        <>           
+        <ProtectedRoute>           
             <section className="page-title">
                 <div className="container">
                     <div className="title-wrapper">
@@ -1166,6 +1168,6 @@ export default function CheckoutClient(){
                 </div>
             </section>
 
-        </>
+        </ProtectedRoute>
     )
 }

@@ -488,7 +488,7 @@ export default function Page()
       }
 
     return (
-        <>
+        <ProtectedRoute>
             <div className={`address-modal modal ${ popStatus ? "active" : ""}`} id="demo-modal"
                 onClick={(e) => {
                     if (e.target.classList.contains("address-modal")) {
@@ -845,7 +845,7 @@ export default function Page()
                     </div>
                 </div>
             </section>
-        </>
+        </ProtectedRoute>
     )
 }
 

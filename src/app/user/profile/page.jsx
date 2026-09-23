@@ -4,7 +4,7 @@ import {useEffect, useState, useContext} from 'react';
 import AccountSidebar from '@/components/AccountSidebar';
 import { useLoader } from '@/context/LoaderContext';
 import { AuthContext } from '@/context/AuthContext';
-
+import ProtectedRoute from '@/components/ProtectedRoute';
 export default function page()
 {
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -112,7 +112,7 @@ export default function page()
     }
 
     return (
-        <div className='alert_mgs_fix'>
+        <ProtectedRoute>
             <section className="page-title">
                 <div className="container">
                     <div className="title-wrapper">
@@ -230,7 +230,7 @@ export default function page()
                     </div>
                 </div>
             </section>
-        </div>
+        </ProtectedRoute>
     )
 }
 
