@@ -1,14 +1,13 @@
 "use client";
 
-import {useEffect, useState, useContext} from 'react';
+import { useEffect, useState, useContext } from 'react';
 import Link from 'next/link';
 import { AuthContext } from '@/context/AuthContext';
 import { useLoader } from '@/context/LoaderContext';
 import AccountSidebar from '@/components/AccountSidebar';
 import ProtectedRoute from '@/components/ProtectedRoute';
 
-export default function Page()
-{
+export default function Page() {
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const { user, logout, isLoggedIn } = useContext(AuthContext);
     const [role, setRole] = useState("");
@@ -33,229 +32,229 @@ export default function Page()
     const [parentDetail, setParentDetail] = useState(null);
     const [upLoading, setUpLoading] = useState(false);
     const [refreshUsers, setRefreshUsers] = useState(false);
-    
+
     const [textId, setTextId] = useState("");
     const [website, setWebsite] = useState("");
     const [companyName, setCompanyName] = useState("");
+    const [certificate, setCertificate] = useState(null);
     const [appLoading, setAppLoading] = useState(false);
     const [message, setMessage] = useState({
-        type : "",
-        value : "",
+        type: "",
+        value: "",
     });
 
     const [company, setCompany] = useState({
-        name : "",
-        tax_id : "",
-        status : "",
-        updated_at : "",
-        website : ""
+        name: "",
+        tax_id: "",
+        status: "",
+        updated_at: "",
+        website: ""
     });
 
 
     useEffect(() => {
-                startLoading()
-                fetch(`${baseUrl}user`, {
-                    method: "GET",
-                    headers: {  "Authorization" : `Bearer ${localStorage.getItem("token")}`,  "Content-Type": "application/json"},
-                })
-                .then(response => {
-                    if (!response.ok) {
+        startLoading()
+        fetch(`${baseUrl}user`, {
+            method: "GET",
+            headers: { "Authorization": `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json" },
+        })
+            .then(response => {
+                if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(result => {
-                    setRole(result.data.role || "")
-                    setAllowMethods(result?.data?.payment_method)
-                    if(result.data.company){
-                        setCompany(prev => ({
-                            ...prev,
-                            id : result?.data?.company?.id,
-                            name : result.data.company.company,
-                            tax_id: result.data.company.tax_id,
-                            status: result.data.company.status,
-                            updated_at: result.data.company.updated_at,
-                            website: result.data.company.website
-                        }));
-                    }
-                    if(result?.data?.parent){
-                        setParentDetail(result?.data?.parent)
-                    }
-                    stopLoading();
-                })
-                .catch(error => {
-                    console.error('Error fetching User data:', error);
-                });
-            }, 
-        []);   
-        
-        useEffect(() => {
-            const fetchCompany = async ()=>{
-                try{
-                    const response = await fetch(`${baseUrl}company`, {
-                        method: "GET",
-                        headers: {  "Authorization" : `Bearer ${localStorage.getItem("token")}`,  "Content-Type": "application/json"},
-                    });
-                    if(!response.ok){
-                        throw new Error("Company Fetch Failed");
-                    }
-
-                    const result = await response.json();
+                }
+                return response.json();
+            })
+            .then(result => {
+                setRole(result.data.role || "")
+                setAllowMethods(result?.data?.payment_method)
+                if (result.data.company) {
                     setCompany(prev => ({
                         ...prev,
-                        name : result.data.company_name,
-                        tax_id: result.data.tax_id,
-                        status: result.data.status,
-                        updated_at: result.data.updated_at,
-                        website: result.data.website
+                        id: result?.data?.company?.id,
+                        name: result.data.company.company,
+                        tax_id: result.data.company.tax_id,
+                        status: result.data.company.status,
+                        updated_at: result.data.company.updated_at,
+                        website: result.data.company.website
                     }));
-                }catch(err){
-                    console.log(err)
                 }
-            }
-                if(company?.id){
-                    fetchCompany();
+                if (result?.data?.parent) {
+                    setParentDetail(result?.data?.parent)
                 }
-            }, [company?.id]);   
+                stopLoading();
+            })
+            .catch(error => {
+                console.error('Error fetching User data:', error);
+            });
+    },
+        []);
 
-        
-        const applyCompany = async (e) => {
-            e.preventDefault();
-            setAppLoading(true);
-            
-            try{
+    useEffect(() => {
+        const fetchCompany = async () => {
+            try {
                 const response = await fetch(`${baseUrl}company`, {
-                    method: "POST",
-                    headers: {  "Authorization" : `Bearer ${localStorage.getItem("token")}`,  "Content-Type": "application/json"},
-                    body : JSON.stringify({
-                        company_name : companyName,
-                        tax_id : textId,
-                        website : website,
-                    })
+                    method: "GET",
+                    headers: { "Authorization": `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json" },
                 });
-                if(!response.ok){
-                    throw new Error("Company Create Failed");
+                if (!response.ok) {
+                    throw new Error("Company Fetch Failed");
                 }
 
                 const result = await response.json();
-                setMessage({
-                    type : result.status,
-                    value : "Application Submitted Successfully"
-                })
-            }catch(err){
-                console.error(err)
-            }finally{
-                setAppLoading(false);
+                setCompany(prev => ({
+                    ...prev,
+                    name: result.data.company_name,
+                    tax_id: result.data.tax_id,
+                    status: result.data.status,
+                    updated_at: result.data.updated_at,
+                    website: result.data.website
+                }));
+            } catch (err) {
+                console.log(err)
             }
         }
+        if (company?.id) {
+            fetchCompany();
+        }
+    }, [company?.id]);
+
+
+    const applyCompany = async (e) => {
+        e.preventDefault();
+        setAppLoading(true);
+
+        try {
+            const response = await fetch(`${baseUrl}company`, {
+                method: "POST",
+                headers: { "Authorization": `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    company_name: companyName,
+                    tax_id: textId,
+                    website: website,
+                    document : certificate,
+                })
+            });
+            if (!response.ok) {
+                throw new Error("Company Create Failed");
+            }
+
+            const result = await response.json();
+            setMessage({
+                type: result.status,
+                value: "Application Submitted Successfully"
+            })
+        } catch (err) {
+            console.error(err)
+        } finally {
+            setAppLoading(false);
+        }
+    }
 
     const handleUser = async (e) => {
         e.preventDefault();
-        let errors = validate({name, email, contact, orderLimit, paymentMethod})
+        let errors = validate({ name, email, contact, orderLimit, paymentMethod })
         setFormErrors(errors);
         console.log(paymentMethod)
-        if(Object.keys(errors).length === 0)
-        {
-            setAppLoading(true);    
-            try{
+        if (Object.keys(errors).length === 0) {
+            setAppLoading(true);
+            try {
                 const response = await fetch(`${baseUrl}company/user`, {
                     method: "POST",
-                    headers: {  "Authorization" : `Bearer ${localStorage.getItem("token")}`,  "Content-Type": "application/json"},
-                    body : JSON.stringify({
-                        name : name,
-                        email : email,
-                        contact : contact,
-                        order_limit : orderLimit,
-                        payment_method : paymentMethod
+                    headers: { "Authorization": `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        contact: contact,
+                        order_limit: orderLimit,
+                        payment_method: paymentMethod
                     })
                 })
-                if(!response.ok){
+                if (!response.ok) {
                     throw new Error("Fecthed Failed User Resgister");
                 }
 
                 const result = await response.json();
-                if(result.status){
+                if (result.status) {
                     setMessage({
-                        type : result.status,
-                        value : result.message
+                        type: result.status,
+                        value: result.message
                     })
-                }else{
+                } else {
                     setMessage({
-                        type : result.status,
-                        value : result.message.email[0]
+                        type: result.status,
+                        value: result.message.email[0]
                     })
                 }
-            }catch(err){
+            } catch (err) {
                 console.error(err)
-            }finally{
+            } finally {
                 setAppLoading(false);
             }
         }
-    }   
-    
-    
+    }
+
+
     useEffect(() => {
         const getUsers = async () => {
             startLoading()
-            try{
+            try {
                 const response = await fetch(`${baseUrl}company/users`, {
-                    method : 'GET',
-                    headers: {  "Authorization" : `Bearer ${localStorage.getItem("token")}`,  "Content-Type": "application/json"},
+                    method: 'GET',
+                    headers: { "Authorization": `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json" },
                 })
 
-                if(!response.ok){
+                if (!response.ok) {
                     throw new Error("Get Users Failed")
                 }
 
                 const result = await response.json();
                 setUsers(result.data)
-            }catch(err){
+            } catch (err) {
                 console.log(err)
-            }finally{
-                stopLoading(); 
+            } finally {
+                stopLoading();
             }
         }
-        if(company?.status === "Approved"){
+        if (company?.status === "Approved") {
             getUsers();
         }
     }, [company?.status, refreshUsers])
-
     const validate = (val) => {
         const errors = {}
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i
-        if(!val.name){
+        if (!val.name) {
             errors.name = "Name is required !"
         }
-        if(!val.email){
+        if (!val.email) {
             errors.email = "Email is required !"
-        }else if(!regex.test(val.email)){
+        } else if (!regex.test(val.email)) {
             errors.email = "Email is not valid"
         }
-        if(!val.contact){
+        if (!val.contact) {
             errors.contact = "Contact Number is required !"
         }
-        if(!val.orderLimit){
+        if (!val.orderLimit) {
             errors.orderLimit = "Order Limit is required !"
         }
-        if(!val.paymentMethod.length){
+        if (!val.paymentMethod.length) {
             errors.paymentMethod = "Payment Method is required !"
         }
-        
+
 
         return errors
     }
 
 
-     const handlePayment = (e) => {
+    const handlePayment = (e) => {
         const value = e.target.value;
         const checked = e.target.checked;
 
         setPaymentMethod((prev) => {
-        if (checked) {
-            return [...prev, value];
-        } else {
-            return prev.filter((item) => item !== value);
-        }
+            if (checked) {
+                return [...prev, value];
+            } else {
+                return prev.filter((item) => item !== value);
+            }
         });
     };
 
@@ -306,27 +305,52 @@ export default function Page()
     const UpdateUser = async (e) => {
         setUpLoading(true);
         e.preventDefault();
-        try{
+        try {
             const response = await fetch(`${baseUrl}company/user/${currentUser?.id}`, {
                 method: "PUT",
                 headers: { "Authorization": `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json" },
                 body: JSON.stringify(currentUser)
             });
-            
-            if(!response.ok){
+
+            if (!response.ok) {
                 throw new Error("User Update Failed");
             }
             const result = await response.json()
-            if(result?.status){
+            if (result?.status) {
                 setRefreshUsers((prev) => !prev)
                 viewUser();
             }
-        }catch(err){
+        } catch (err) {
             console.log(err)
-        }finally{
+        } finally {
             setUpLoading(false);
         }
     }
+
+    const handleDocumentChange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        if (!file.type.startsWith("image/") && file.type !== "application/pdf") {
+            alert("Only image or PDF files are allowed.");
+            e.target.value = "";
+            return;
+        }
+        if (file.size > 2 * 1024 * 1024) {
+            alert("File size must be less than 2 MB.");
+            e.target.value = "";
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const base64 = event.target.result;
+            setCertificate(base64);
+        };
+
+        reader.onerror = () => {
+            console.error("Failed to read file");
+        };
+        reader.readAsDataURL(file);
+    };
 
     return (
         <ProtectedRoute>
@@ -412,42 +436,48 @@ export default function Page()
                             <AccountSidebar />
                         </div>
                         <div className="col-md-75">
-                            {(!company?.tax_id && !parentDetail?.created_at) ? 
+                            {(!company?.tax_id && !parentDetail?.created_at) ?
                                 <>
-                                <div className="widget">
-                                    <h4>Apply For Corporate Account</h4>
-                                    <div className={`form-wrapper ${appLoading ? "loading-wrapper" : ""}`}>
-                                        <form onSubmit={applyCompany}>
-                                            <div className="row">
-                                                <div className="col-md-5 m_5_100">
-                                                    <div className="form-group">
-                                                        <label>Company Name</label>
-                                                        <input type="text" className="form-control" placeholder="Company Name" value={companyName} onChange={(e) => setCompanyName(e.target.value)} required={true} />
+                                    <div className="widget">
+                                        <h4>Apply For Corporate Account</h4>
+                                        <div className={`form-wrapper ${appLoading ? "loading-wrapper" : ""}`}>
+                                            <form onSubmit={applyCompany}>
+                                                <div className="row">
+                                                    <div className="col-md-5 m_5_100">
+                                                        <div className="form-group">
+                                                            <label>Company Name</label>
+                                                            <input type="text" className="form-control" placeholder="Company Name" value={companyName || ""} onChange={(e) => setCompanyName(e.target.value)} required={true} />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-5 m_5_100">
+                                                        <div className="form-group">
+                                                            <label>Tax ID</label>
+                                                            <input type="text" className="form-control" placeholder="Tax ID" value={textId || ""} onChange={(e) => setTextId(e.target.value)} required={true} />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-5 m_5_100">
+                                                        <div className="form-group">
+                                                            <label>Website URL</label>
+                                                            <input type="url" className="form-control" placeholder="Website URL" value={website || ""} onChange={(e) => setWebsite(e.target.value)} required={true} />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-5 m_5_100">
+                                                        <div className="form-group">
+                                                            <label>Certificate document</label>
+                                                            <input type="file" className="form-control" accept="image/*,.pdf" value={certificate ?? ""} onChange={handleDocumentChange} required={true} />
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div className="col-md-5 m_5_100">
-                                                    <div className="form-group">
-                                                        <label>Tax ID</label>
-                                                        <input type="text" className="form-control" placeholder="Tax ID" value={textId || ""} onChange={(e) => setTextId(e.target.value)} required={true} />
-                                                    </div>
+                                                <div className="message">
+                                                    <p className={message.type ? "success" : "error"}>{message.value}</p>
                                                 </div>
-                                                <div className="col-md-5 m_5_100">
-                                                    <div className="form-group">
-                                                        <label>Website URL</label>
-                                                        <input type="url" className="form-control" placeholder="Website URL" value={website || ""} onChange={(e) => setWebsite(e.target.value)} required={true} />
-                                                    </div>
+
+                                                <div className="btn-area">
+                                                    <button className={`btn btn-primary ${appLoading ? "loading" : ""}`} aria-label="Submit">{!appLoading ? "Submit" : ""}</button>
                                                 </div>
-                                            </div>
-                                            <div className="message">
-                                                <p className={message.type ? "success" : "error"}>{message.value}</p>
-                                            </div>
-                                            
-                                            <div className="btn-area">
-                                                <button className={`btn btn-primary ${appLoading ? "loading" : ""}`} aria-label="Submit">{!appLoading ? "Submit" : ""}</button>
-                                            </div>
-                                        </form>
+                                            </form>
+                                        </div>
                                     </div>
-                                </div>
                                 </> :
                                 <>
                                     <div className="widget">
@@ -458,19 +488,19 @@ export default function Page()
                                                     <div className="col-md-5 m_5_100">
                                                         <div className="form-group">
                                                             <label>Company Name</label>
-                                                            <input type="text" className="form-control" placeholder="Company Name" value={company?.name || parentDetail?.company_name} readOnly={true} />
+                                                            <input type="text" className="form-control" placeholder="Company Name" value={company?.name || parentDetail?.company_name || ""} readOnly={true} />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-5 m_5_100">
                                                         <div className="form-group">
                                                             <label>Tax ID</label>
-                                                            <input type="text" className="form-control" placeholder="Tax ID" value={company?.tax_id || parentDetail?.tax_id} readOnly={true} />
+                                                            <input type="text" className="form-control" placeholder="Tax ID" value={company?.tax_id || parentDetail?.tax_id || ""} readOnly={true} />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-5 m_5_100">
                                                         <div className="form-group">
                                                             <label>Website URL</label>
-                                                            <input type="url" className="form-control" placeholder="Website URL" value={company?.website || parentDetail?.website} readOnly={true} />
+                                                            <input type="url" className="form-control" placeholder="Website URL" value={company?.website || parentDetail?.website || ""} readOnly={true} />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-5 m_5_100">
@@ -490,12 +520,12 @@ export default function Page()
                                                         <div className="form-group">
                                                             <label className="w-100">Status</label>
                                                             <div className="status mt-2">
-                                                                {(company?.status || parentDetail?.status) ? 
-                                                                    ((company?.status == 'Pending' || parentDetail?.status == 'Pending') ? 
+                                                                {(company?.status || parentDetail?.status) ?
+                                                                    ((company?.status == 'Pending' || parentDetail?.status == 'Pending') ?
                                                                         <span className="badge badge-primary">Pending</span> :
-                                                                        (company?.status == 'Approved' || parentDetail?.status == 'Approved') ? 
-                                                                        <span className="badge badge-success">Approved</span> :
-                                                                        <span className="badge badge-danger">Unapproved</span>
+                                                                        (company?.status == 'Approved' || parentDetail?.status == 'Approved') ?
+                                                                            <span className="badge badge-success">Approved</span> :
+                                                                            <span className="badge badge-danger">Unapproved</span>
                                                                     ) : ""
                                                                 }
                                                             </div>
@@ -514,28 +544,28 @@ export default function Page()
                                                                 <div className="form-group">
                                                                     <label>Name</label>
                                                                     <input type="text" className="form-control" placeholder="Name" onChange={(e) => setName(e.target.value)} value={name} />
-                                                                    <p className="error">{ formErrors.name }</p>
+                                                                    <p className="error">{formErrors.name}</p>
                                                                 </div>
                                                             </div>
                                                             <div className="col-md-5">
                                                                 <div className="form-group">
                                                                     <label>Email Address</label>
                                                                     <input type="email" className="form-control" placeholder="Your Email" onChange={(e) => setEmail(e.target.value)} value={email} />
-                                                                    <p className="error">{ formErrors.email }</p>
+                                                                    <p className="error">{formErrors.email}</p>
                                                                 </div>
                                                             </div>
                                                             <div className="col-md-5">
                                                                 <div className="form-group">
                                                                     <label>Contact</label>
                                                                     <input type="tel" className="form-control" placeholder="Your Contact Number" onChange={(e) => setContact(e.target.value)} value={contact} />
-                                                                    <p className="error">{ formErrors.contact }</p>
+                                                                    <p className="error">{formErrors.contact}</p>
                                                                 </div>
                                                             </div>
                                                             <div className="col-md-5">
                                                                 <div className="form-group">
                                                                     <label>Order Limit</label>
                                                                     <input type="number" className="form-control" placeholder="Your Order Limit" min="0" onChange={(e) => setOrderLimit(e.target.value)} value={orderLimit} />
-                                                                    <p className="error">{ formErrors.orderLimit }</p>
+                                                                    <p className="error">{formErrors.orderLimit}</p>
                                                                 </div>
                                                             </div>
                                                             <div className="col-md-5">
@@ -543,28 +573,28 @@ export default function Page()
                                                                 {allowMethods?.length &&
                                                                     (allowMethods?.map((payment, index) => (
                                                                         <div className="form-check mb-2" key={index}>
-                                                                            <input type="checkbox" id={payment} className="form-check-input" value={payment?.toLowerCase()} checked={paymentMethod.find((p) => p===payment)} onChange={handlePayment} />
+                                                                            <input type="checkbox" id={payment} className="form-check-input" value={payment?.toLowerCase()} checked={paymentMethod.find((p) => p === payment)} onChange={handlePayment} />
                                                                             <label htmlFor={payment}>{payment.replace("_", " ")}</label>
                                                                         </div>
                                                                     )))
                                                                 }
-                                                                
-                                                                <p className="error mt-1">{ formErrors.paymentMethod }</p>
+
+                                                                <p className="error mt-1">{formErrors.paymentMethod}</p>
                                                             </div>
                                                         </div>
                                                         <div className="message mt-2">
                                                             <p className={message.type ? "success" : "error"}>{message.value}</p>
                                                         </div>
-                                                        
+
                                                         <div className="btn-area mt-2">
                                                             <button className={`btn btn-primary ${appLoading ? "loading" : ""}`} aria-label="Submit">{!appLoading ? "Submit" : ""}</button>
                                                         </div>
                                                     </form>
                                                 </div>
                                             </> : ""
-                                        }    
+                                        }
                                     </div>
-                                    {(company?.status === "Approved" && !parentDetail?.created_at) ? 
+                                    {(company?.status === "Approved" && !parentDetail?.created_at) ?
                                         <div className="widget">
                                             <h4>Users</h4>
                                             <div className='table_wrapper'>
@@ -595,10 +625,10 @@ export default function Page()
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            
+
                                         </div> : ""
                                     }
-                                </>    
+                                </>
                             }
                         </div>
                     </div>

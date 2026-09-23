@@ -360,7 +360,10 @@ export default function CheckoutClient(){
                 setUserDetail(result?.data)
                 //this is for po commented is right for po
                 //if(result?.data?.company_id || result?.data?.company?.id) setPaymentMethod(result?.data?.payment_method[0])
-                if(result?.data?.company_id || result?.data?.company?.id) setPaymentMethod("credit_card")
+                if(result?.data){
+                    setPaymentMethod(((!result?.data?.company || result?.data?.company?.status=="Pending") && !result?.data?.company_id) ? "credit_card" : result?.data?.payment_method?.[0])
+                }
+                //if(result?.data?.company_id || result?.data?.company?.id) setPaymentMethod("credit_card")
                 if(result?.data?.order_limit) setOrderLimit(result?.data?.order_limit)
                 setUserFetched(true);
             } catch (err) {
@@ -1061,7 +1064,7 @@ export default function CheckoutClient(){
                                     </table>
                                     <div className="payment-wrapper">
                                         {/*{(!userDetail?.company_id && !userDetail?.company?.id) ?*/}
-                                        {(!userDetail?.company || userDetail?.company?.status=="Pending") ?
+                                        {((!userDetail?.company || userDetail?.company?.status=="Pending") && !userDetail?.company_id) ?
                                             <> 
                                                 <div className="form-group">
                                                     <label>
@@ -1106,7 +1109,7 @@ export default function CheckoutClient(){
                                                                         <label>
                                                                             <div className="title">
                                                                                 <img src="/assets/images/atm-card.webp" loading="lazy" />
-                                                                                Credit/Debit Card
+                                                                                Credit/Debit Card 
                                                                             </div>
                                                                         </label>
                                                                     </div>

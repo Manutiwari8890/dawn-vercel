@@ -5,6 +5,7 @@ import { AuthContext } from '@/context/AuthContext';
 import Select from 'react-select'
 import { useLoader } from '@/context/LoaderContext';
 import AccountSidebar from '@/components/AccountSidebar';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
 export default function Page()
 {

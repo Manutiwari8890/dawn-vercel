@@ -301,7 +301,7 @@ button.navbar-toggler:hover span { background-color: var(--dark-color); }
  /***************** Footer *********************/
 section.pre-footer{background-color: var(--dark-color); padding: 25px 0px; border-bottom: 1px solid #6e6e6e73;}
 .pre-footer .title h2{color: #fff; font-size: 36px; font-weight: 500;}
-.pre-footer .form-wrapper{background-color: white; padding: 10px 10px; border-radius: 55px;}
+.pre-footer .form-wrapper{background-color: white; padding: 10px 10px; border-radius: 55px; max-height : 85px; overflow: hidden;}
 .pre-footer .form-wrapper .captcha-wrapper{border: 0px;}
 .pre-footer form .form-group{margin: 0px; width: 40%;}
 .pre-footer form .form-group input{background-color: #a8a8a833; color: black; font-size: 16px; font-weight: 500; border: 0px; border-radius: 40px; padding:15px 20px;}
