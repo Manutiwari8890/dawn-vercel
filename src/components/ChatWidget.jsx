@@ -92,7 +92,7 @@ export default function ChatWidget() {
 
                 {loading && (
                     <div className="ldp-typing">
-                        <span>LDP is typing</span>
+                        <span>Dawn is typing</span>
                         <span className="ldp-typing-dots">
                             <span className="ldp-typing-dot" />
                             <span className="ldp-typing-dot" />

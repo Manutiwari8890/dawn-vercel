@@ -2305,7 +2305,7 @@ section.not-found .title a{margin-top: 20px;}
 }
 
 .ldp-chat-input:focus {
-    border-color: #2563eb;
+    border-color: var(--yellow-color);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
