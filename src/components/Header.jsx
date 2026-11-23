@@ -14,6 +14,7 @@ function Header(){
 
 
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+    console.log(baseUrl);
     const { getTotalItem, fetchCartFromApi } = useContext(CartContext)
     const { logout, isLoggedIn } = useContext(AuthContext);
     const [isOpen, setIsOpen] = useState(false);
