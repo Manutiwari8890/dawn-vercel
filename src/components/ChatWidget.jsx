@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function ChatWidget() {
     const [ isOpen, setIsOpen ] = useState(false);
@@ -8,6 +8,23 @@ export default function ChatWidget() {
     ]);
     const [ input, setInput ] = useState('');
     const [ loading, setLoading ] = useState(false);
+    const baseUrl = process.env.NEXT_PUBLIC_CHAT_API_BASE_URL;
+
+    function getSessionId() {
+        try {
+            let id = sessionStorage.getItem("session-id");
+            if (!id) {
+                id =
+                    typeof crypto !== "undefined" && crypto.randomUUID
+                        ? crypto.randomUUID()
+                        : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+                sessionStorage.setItem("session-id", id);
+            }
+            return id;
+        } catch {
+            return null;
+        }
+    }
 
     const sendMessage = async (e) => {
         e.preventDefault();
@@ -17,15 +34,20 @@ export default function ChatWidget() {
         setMessages((prev) => [ ...prev, { sender: 'user', text: userMsg } ]);
         setInput('');
         setLoading(true);
-
+        const mData = {
+            sessionId : getSessionId(),
+            messages : [{
+                role : "user", content : userMsg
+            }]
+        }
         try {
-            const res = await fetch('https://new.dawnscientific.com/api/chat', {
+            const res = await fetch(`${baseUrl}chat`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: userMsg }),
+                body: JSON.stringify(mData),
             });
             const data = await res.json();
-            setMessages((prev) => [ ...prev, { sender: 'bot', text: data.reply } ]);
+            setMessages((prev) => [ ...prev, { sender: 'bot', text: data.reply, logId: data.logId } ]);
         } catch (err) {
             setMessages((prev) => [ ...prev, { sender: 'bot', text: 'Network error. Try again later.' } ]);
         } finally {
@@ -33,8 +55,49 @@ export default function ChatWidget() {
         }
     };
 
+    async function sendFeedback(index, logId, value) {
+        setMessages((prev) => prev.map((m, i) => (i === index ? { ...m, voted: value } : m)));
+
+        try {
+            const res = await fetch(`${baseUrl}feedback`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ logId, value }),
+            });
+            if (!res.ok) throw new Error("failed");
+        } catch {
+            setMessages((prev) => prev.map((m, i) => (i === index ? { ...m, voted: null } : m)));
+        }
+    }
+
+    useEffect(() => {
+        const sid = getSessionId();
+        if (!sid) return;
+
+        const controller = new AbortController();
+
+        fetch(`${baseUrl}chats/${sid}`, { signal: controller.signal })
+            .then((r) => (r.ok ? r.json() : null))
+            .then((data) => {
+                if (!data?.messages?.length) return;
+
+                const restored = data.messages.map((m) =>
+                    m.role === "user"
+                        ? { sender: "user", text: m.text }
+                        : { sender: "bot", text: m.text, html: m.html, logId: m.id }
+                );
+
+                // keep the greeting first; don't overwrite if the user already sent something
+                setMessages((prev) => (prev.length > 1 ? prev : [ prev[0], ...restored ]));
+            })
+            .catch(() => { }); // ignore network errors and aborted requests
+
+        return () => controller.abort();
+    }, []);
+
     return (
         <div className="ldp-chat-widget">
+            
     {!isOpen ? (
         <button
             onClick={() => setIsOpen(true)}
@@ -53,11 +116,18 @@ export default function ChatWidget() {
             </svg>
         </button>
     ) : (
+        <>
         <div className="ldp-chat-window">
             <div className="ldp-chat-header">
-                <span className="ldp-chat-title">
-                    Dawnscieitifc Assistant
-                </span>
+                <div className='title-wrapper'>
+                    <div className="ldp-chat-title">
+                        Dawn Scientific Assistant
+                        <div className='ai-icon'>
+                            AI
+                        </div>
+                    </div>
+                    <p className="online">online</p>
+                </div>
                 <button
                     onClick={() => setIsOpen(false)}
                     className="ldp-chat-close"
@@ -87,12 +157,41 @@ export default function ChatWidget() {
                                 __html: msg.text,
                             }}
                         />
+                        {msg.logId && (
+                            <div className="feedback-row" style={{ marginTop: 4, fontSize: 14 }}>
+                                {msg.voted ? (
+                                    <span style={{ fontSize: 12, color: "#64748b" }}>
+                                        {msg.voted === 1 ? "👍 Thanks for the feedback!" : "👎 Thanks, we'll improve."}
+                                    </span>
+                                ) : (
+                                    <>
+                                        <button
+                                            type="button"
+                                            onClick={() => sendFeedback(index, msg.logId, 1)}
+                                            aria-label="Helpful"
+                                            className="btn-feedback good"
+                                            >
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><g id="_01_align_center" data-name="01 align center"  fill="currentColor"><path d="M15.021,7l.336-2.041a3.044,3.044,0,0,0-4.208-3.287A3.139,3.139,0,0,0,9.582,3.225L7.717,7H3a3,3,0,0,0-3,3v9a3,3,0,0,0,3,3H22.018L24,10.963,24.016,7ZM2,19V10A1,1,0,0,1,3,9H7V20H3A1,1,0,0,1,2,19Zm20-8.3L20.33,20H9V8.909l2.419-4.9A1.07,1.07,0,0,1,13.141,3.8a1.024,1.024,0,0,1,.233.84L12.655,9H22Z" fill="currentColor" /></g></svg>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => sendFeedback(index, msg.logId, -1)}
+                                            aria-label="Not helpful"
+                                            className="btn-feedback bad"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><g id="_01_align_center" data-name="01 align center" fill="currentColor" ><path d="M24,14.214,22,3H3A3,3,0,0,0,0,6v9a3,3,0,0,0,3,3H7.712l1.914,3.879a3.038,3.038,0,0,0,5.721-1.838L15.011,18H24ZM2,15V6A1,1,0,0,1,3,5H7V16H3A1,1,0,0,1,2,15Zm20,1H12.655l.719,4.365a1.024,1.024,0,0,1-.233.84,1.071,1.071,0,0,1-1.722-.212L9,16.091V5H20.33L22,14.3Z" fill="currentColor" /></g></svg>
+                                        </button>
+                                    </>
+                                )}
+                            </div>
+                        )}
+                        
                     </div>
                 ))}
 
                 {loading && (
                     <div className="ldp-typing">
-                        <span>Dawn is typing</span>
+                        <span>Dawn is thinking</span>
                         <span className="ldp-typing-dots">
                             <span className="ldp-typing-dot" />
                             <span className="ldp-typing-dot" />
@@ -101,35 +200,39 @@ export default function ChatWidget() {
                     </div>
                 )}
             </div>
-
-            <form onSubmit={sendMessage} className="ldp-chat-form">
-                <input
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    placeholder="Ask about products, prices..."
-                    className="ldp-chat-input"
-                />
-
-                <button
-                    type="submit"
-                    className="ldp-chat-send"
-                    aria-label="Send message"
-                    disabled={loading || !input.trim()}
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        className="ldp-send-icon"
+            <div className="ldp-chat-form">
+                <form onSubmit={sendMessage} className="form-row">
+                    <input
+                        type="text"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        placeholder="Ask about products, prices..."
+                        className="ldp-chat-input"
+                    />
+                    <button
+                        type="submit"
+                        className="ldp-chat-send"
+                        aria-label="Send message"
+                        disabled={loading || !input.trim()}
                     >
-                        <path
-                            d="M1.444,6.669a2,2,0,0,0-.865,3.337l3.412,3.408V20h6.593l3.435,3.43a1.987,1.987,0,0,0,1.408.588,2.034,2.034,0,0,0,.51-.066,1.978,1.978,0,0,0,1.42-1.379L23.991.021ZM2,8.592l17.028-5.02L5.993,16.586v-4Zm13.44,13.424L11.413,18h-4L20.446,4.978Z"
-                            fill="currentColor"
-                        />
-                    </svg>
-                </button>
-            </form>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            className="ldp-send-icon"
+                        >
+                            <path
+                                d="M1.444,6.669a2,2,0,0,0-.865,3.337l3.412,3.408V20h6.593l3.435,3.43a1.987,1.987,0,0,0,1.408.588,2.034,2.034,0,0,0,.51-.066,1.978,1.978,0,0,0,1.42-1.379L23.991.021ZM2,8.592l17.028-5.02L5.993,16.586v-4Zm13.44,13.424L11.413,18h-4L20.446,4.978Z"
+                                fill="currentColor"
+                            />
+                        </svg>
+                    </button>
+                </form>
+                <p className="chat-copyright">Powered by <span>Dawn Scientific AI •</span> Instant SDS & Quote Support </p>
+            </div>
+            
         </div>
+        <div className='chat-overlay'></div>
+        </>
     )}
 </div>
     );
