@@ -8,7 +8,7 @@ export default function ChatWidget() {
     ]);
     const [ input, setInput ] = useState('');
     const [ loading, setLoading ] = useState(false);
-    const baseUrl = process.env.NEXT_PUBLIC_API_CHAT_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_CHAT_API_URL;
     console.log(baseUrl);
 
     function getSessionId() {
